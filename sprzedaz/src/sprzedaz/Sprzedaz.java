@@ -5,6 +5,7 @@
  */
 
 package sprzedaz;
+import wspolne.Zamowienie;
 import baza.BazaDanych;
 import java.sql.SQLException;
 import java.util.ArrayList;

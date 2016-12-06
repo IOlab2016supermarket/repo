@@ -5,6 +5,7 @@
  */
 package sprzedaz;
 
+import wspolne.Produkt;
 import java.util.ArrayList;
 import java.util.List;
 
