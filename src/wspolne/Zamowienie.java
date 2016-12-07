@@ -5,8 +5,7 @@
  */
 package wspolne;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -27,9 +26,8 @@ public class Zamowienie {
     //private int idProdukt;
     //private int iloscProduktow;
     
-	public Zamowienie(int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,String data_zlozenia, int id_sprzedawcy)
+	public Zamowienie(int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,Date data_zlozenia, int id_sprzedawcy)
 	{
-		//String data_zlozenia w formacie dd/mm/yyyy
 		this.nr_zamowienia = nr_zamowienia;
 		this.produkty = new ArrayList<Produkt>();
 		for(int i = 0; i < produkty.size(); i++)
@@ -37,15 +35,7 @@ public class Zamowienie {
 			this.produkty.add(new Produkt(produkty.get(i)));
 		}
 		this.czas_dostawy = czas_dostawy;
-		SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
-		try 
-		{
-			this.data_zlozenia = simple.parse(data_zlozenia);
-		} 
-		catch (ParseException e) 
-		{
-			e.printStackTrace();
-		}
+		this.data_zlozenia = data_zlozenia;
 		this.id_sprzedawcy = id_sprzedawcy;
 		status = new String("W trakcie realizacji");
 	}
@@ -80,19 +70,10 @@ public class Zamowienie {
 		return produkty;
 	}
 	
-	//String data_dostawy w formacie dd/mm/yyyy
-	public void zamowienieZrealizowane(String data_dostawy)
+	public void zamowienieZrealizowane(Date data_dostawy)
 	{
 		status = new String("Zrealizowane");
-		SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
-		try 
-		{
-			this.data_dostawy = simple.parse(data_dostawy);
-		} 
-		catch (ParseException e) 
-		{
-			e.printStackTrace();
-		}
+		this.data_dostawy = data_dostawy;
 	}
 	
 	public void dodajProdukt(Produkt produkt)
