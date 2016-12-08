@@ -71,7 +71,7 @@ public class Marketing {
     		while(i == ankiety.get(ankiety.size()-1).pobierzId())
     			i++;
     	}
-    	txt = JOptionPane.showInputDialog("Podaj tytu³ ankiety");
+    	txt = JOptionPane.showInputDialog("Podaj tytuï¿½ ankiety");
 		Ankieta ankieta = new Ankieta(i, produkt.pobierzId(), txt);
 		boolean czyKolejnePytanie = true, czyWpisanePytanie = true;
 		while(czyKolejnePytanie == true)
@@ -80,19 +80,19 @@ public class Marketing {
 			if(txt == null)
 			{
 				czyWpisanePytanie = false;
-				JOptionPane.showMessageDialog(null,"Ankieta nie zosta³a utworzona");
+				JOptionPane.showMessageDialog(null,"Ankieta nie zostaï¿½a utworzona");
 			}
 			else
 				ankieta.dodajPytanie(txt);
 			if(czyWpisanePytanie == true)
-				tmp = JOptionPane.showConfirmDialog(null,"Czy chcesz dodaæ nastêpne pytanie", " ", JOptionPane.YES_NO_OPTION);
+				tmp = JOptionPane.showConfirmDialog(null,"Czy chcesz dodaï¿½ nastï¿½pne pytanie", " ", JOptionPane.YES_NO_OPTION);
 			if(tmp == 1)
 				czyKolejnePytanie = false;
 			if(czyKolejnePytanie == false && czyWpisanePytanie == true)
 			{
 				ankiety.add(ankieta);
 				sortujListe("Ankieta");
-				JOptionPane.showMessageDialog(null,"Ankieta zosta³a utworzona pomyœlnie");
+				JOptionPane.showMessageDialog(null,"Ankieta zostaï¿½a utworzona pomyï¿½lnie");
 			}
 		}
 	}
@@ -107,7 +107,7 @@ public class Marketing {
 		Produkt produkt;
 		produkt = wybierzProdukt(magazynProdukty);
 		if(produkt == null)
-			JOptionPane.showMessageDialog(null,"Nie mo¿na utworzyæ promocji");
+			JOptionPane.showMessageDialog(null,"Nie moï¿½na utworzyï¿½ promocji");
 	    if((sprawdzPromocje(produkt) == true) && (produkt != null))
 	    {
 	    	int i;
@@ -125,12 +125,12 @@ public class Marketing {
 			sortujListe("Promocja");
 			int indeks = wyszukaj(magazynProdukty, promocja.pobierzIdProduktu());
 			aktualizujCene(indeks,promocja.pobierzNowaCene(),magazynProdukty);
-			JOptionPane.showMessageDialog(null,"Promocja zosta³a utworzona pomyœlnie");
+			JOptionPane.showMessageDialog(null,"Promocja zostaï¿½a utworzona pomyï¿½lnie");
 	    }
 	    else
 	    {
 	    	if(produkt != null)
-	    		JOptionPane.showMessageDialog(null,"Promocja na wybrany produkt ju¿ istnieje");	
+	    		JOptionPane.showMessageDialog(null,"Promocja na wybrany produkt juï¿½ istnieje");	
 	    }
 	}
 	
@@ -169,7 +169,7 @@ public class Marketing {
 		{
 			aktualizujCene(indeksProdukt,promocja.pobierzStaraCene(),magazynProdukty);
 			promocje.remove(indeksPromocja);
-			JOptionPane.showMessageDialog(null,"Promocja zosta³a zakoñczona");
+			JOptionPane.showMessageDialog(null,"Promocja zostaï¿½a zakoï¿½czona");
 		}
 	}
 	
@@ -224,7 +224,7 @@ public class Marketing {
 	{
 		if(promocje.size() == 0)
 		{
-			JOptionPane.showMessageDialog(null,"Lista istniej¹cych promocji jest pusta");
+			JOptionPane.showMessageDialog(null,"Lista istniejï¿½cych promocji jest pusta");
 			return null;
 		}
 		Promocja[] tab = new Promocja[promocje.size()];
@@ -234,7 +234,7 @@ public class Marketing {
 			tab[i] = promocje.get(i);
 			i++;
 		}
-		Promocja promocja = (Promocja)JOptionPane.showInputDialog(null,"Wybierz promocjê", "",JOptionPane.PLAIN_MESSAGE,null,tab,tab[0]);
+		Promocja promocja = (Promocja)JOptionPane.showInputDialog(null,"Wybierz promocjï¿½", "",JOptionPane.PLAIN_MESSAGE,null,tab,tab[0]);
 		return promocja;
 	}
 	
@@ -242,7 +242,7 @@ public class Marketing {
 	{
 		if(magazynProdukty.size() == 0)
 		{
-			JOptionPane.showMessageDialog(null,"Lista produktów jest pusta");
+			JOptionPane.showMessageDialog(null,"Lista produktï¿½w jest pusta");
 			return null;
 		}
 		String[] tab = new String[magazynProdukty.size()];
@@ -276,7 +276,7 @@ public class Marketing {
 			tab[i] = ankiety.get(i).pobierzId()+"  "+ankiety.get(i).pobierzTytul()+"    Dotyczy produktu: "+magazynProdukty.get(indeksProdukt).pobierzNazwe();
 			i++;
 		}
-		String txt = (String)JOptionPane.showInputDialog(null,"Wybierz ankietê", "",JOptionPane.PLAIN_MESSAGE,null,tab,tab[0]);
+		String txt = (String)JOptionPane.showInputDialog(null,"Wybierz ankietï¿½", "",JOptionPane.PLAIN_MESSAGE,null,tab,tab[0]);
 		String indeks = new String("");
 		i = 0;
 		while(txt.charAt(i) != ' ')
@@ -292,7 +292,7 @@ public class Marketing {
 	private void aktualizujCene(int indeks, double cena,List<Produkt> magazynProdukty)
 	{
 		magazynProdukty.get(indeks).ustawCenePromocyjna(cena);
-		JOptionPane.showMessageDialog(null,"Cena produktu zosta³a zaktualizowana");
+		JOptionPane.showMessageDialog(null,"Cena produktu zostaï¿½a zaktualizowana");
 	}
 	
 	public List<Promocja> pobierzListePromocji()

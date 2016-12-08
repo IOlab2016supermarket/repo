@@ -33,15 +33,15 @@ public class Promocja {
 	
 	private void ustalCene()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj cenê");
+		String txt1 = JOptionPane.showInputDialog("Podaj cenï¿½");
 		nowa_cena = Double.parseDouble(txt1);
 	}
 	
 	private void ustalDate()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj datê rozpoczêcia (dd/mm/yyyy)");
+		String txt1 = JOptionPane.showInputDialog("Podaj datï¿½ rozpoczï¿½cia (dd/mm/yyyy)");
 		od_kiedy = new String(txt1);
-		String txt2 = JOptionPane.showInputDialog("Podaj datê zakoñczenia (dd/mm/yyyy)");
+		String txt2 = JOptionPane.showInputDialog("Podaj datï¿½ zakoï¿½czenia (dd/mm/yyyy)");
 		do_kiedy = new String(txt2);
 	}
 	

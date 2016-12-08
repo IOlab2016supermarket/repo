@@ -22,8 +22,18 @@ public class Faktura {
    private float wartosc;
    private int iloscProduktow;
    
-   public Faktura(){
+   public Faktura(List<Produkt> produkty, int idFaktura, int IdKlient, int idZamowienie, float wartosc, int ilosc){
       this.produkty  = new ArrayList<Produkt>();
+      this.produkty= produkty;
+      this.idFaktura = idFaktura;
+      this.idKlient = idKlient;
+      this.idZamowienie = idZamowienie;
+      this.wartosc = wartosc;
+      this.iloscProduktow = ilosc;
+   }
+   
+   public void dodajFakture(Faktura f){
+       Sprzedaz.faktury.add(f);
    }
    
     

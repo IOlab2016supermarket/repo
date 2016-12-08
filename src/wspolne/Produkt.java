@@ -16,16 +16,16 @@ public class Produkt {
 	private int id_produktu;
 	private String nazwa;
     private int dlugoscGwarancji;
-    private double cenaZakupu;
-	private double cenaSprzedazy;
+    private double cenaZakupu; // to jest cena zakupu do sklepu
+	private double cenaSprzedazy; // to cena dla klienta
 	private double cenaPromocyjna;
 	private double waga;
 	private int ilosc;
 	//private Date dataWaznosci;
-    //private int nr_regalu;
-    //private int nr_polki;
-    //private int nr_miejsca;
-    //private int punkty;
+                 //private int nr_regalu;
+                 //private int nr_polki;
+                 //private int nr_miejsca;
+                 private int punkty;
 	
 	public Produkt(int id_produktu,String nazwa,int dlugoscGwarancji,double cenaZakupu,double cenaSprzedazy,double cenaPromocyjna,double waga,int ilosc)
 	{
@@ -51,6 +51,9 @@ public class Produkt {
 		ilosc = produkt.pobierzIlosc();
 	}
 	
+                    public int pobierzIloscPunktow(){
+                        return this.punkty;
+                    }
 	public Produkt()
 	{
 		
