@@ -6,42 +6,42 @@ import wspolne.Produkt;
 public class Promocja {
 
 	private int id_promocji;
-	private Produkt produkt;
+	private int id_produkt;
 	private String od_kiedy;
 	private String do_kiedy;
 	private double stara_cena;
 	private double nowa_cena;
 	
-	Promocja(int id_promocji,Produkt produkt)
+	Promocja(int id_promocji,int id_produkt, double stara_cena)
 	{
 		this.id_promocji = id_promocji;
-		this.produkt = produkt;
+		this.id_produkt = id_produkt;
 		ustalCene();
 		ustalDate();
-		this.stara_cena = produkt.pobierzCeneSprzedazy();
+		this.stara_cena = stara_cena;
 	}
 	
-	Promocja(int id_promocji,Produkt produkt,String od_kiedy,String do_kiedy,double nowa_cena)
+	Promocja(int id_promocji,int id_produkt, double stara_cena,String od_kiedy,String do_kiedy,double nowa_cena)
 	{
 		this.id_promocji = id_promocji;
-		this.produkt = produkt;
+		this.id_produkt = id_produkt;
 		this.od_kiedy = od_kiedy;
 		this.do_kiedy = do_kiedy;
-		this.stara_cena = produkt.pobierzCeneSprzedazy();
+		this.stara_cena = stara_cena;
 		this.nowa_cena = nowa_cena;
 	}
 	
 	private void ustalCene()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj cen�");
+		String txt1 = JOptionPane.showInputDialog("Podaj cenďż˝");
 		nowa_cena = Double.parseDouble(txt1);
 	}
 	
 	private void ustalDate()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj dat� rozpocz�cia (dd/mm/yyyy)");
+		String txt1 = JOptionPane.showInputDialog("Podaj datďż˝ rozpoczďż˝cia (dd-mm-yyyy)");
 		od_kiedy = new String(txt1);
-		String txt2 = JOptionPane.showInputDialog("Podaj dat� zako�czenia (dd/mm/yyyy)");
+		String txt2 = JOptionPane.showInputDialog("Podaj datďż˝ zakoďż˝czenia (dd-mm-yyyy)");
 		do_kiedy = new String(txt2);
 	}
 	
@@ -52,7 +52,7 @@ public class Promocja {
 	
 	public int pobierzIdProduktu()
 	{
-		return produkt.pobierzId();
+		return id_produkt;
 	}
 	
 	public double pobierzNowaCene()
@@ -67,7 +67,7 @@ public class Promocja {
 	
 	public String toString()
 	{
-		return id_promocji+" "+produkt.pobierzNazwe()+" data: "+od_kiedy+"/"+do_kiedy+"       (Id produktu:"+produkt.pobierzId()+")";
+		return id_promocji+"  data: "+od_kiedy+"/"+do_kiedy+"       (Id produktu:"+id_produkt+")";
 	}
 	
 }

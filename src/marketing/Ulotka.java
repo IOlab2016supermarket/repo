@@ -10,12 +10,12 @@ public class Ulotka {
 		
 	}
 	
-	void ustawIdAnkiety(int id)
+	void ustawId(int id)
 	{
 		id_ulotki = id;
 	}
 	
-	int pobierzIdAnkiety(int id)
+	int pobierzId(int id)
 	{
 		return id_ulotki;
 	}
