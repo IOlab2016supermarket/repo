@@ -29,9 +29,7 @@ CREATE TABLE promocja
      doKiedy DATETIME , 
 	 idProduktu INTEGER ,
 	 staraCena FLOAT ,
-	 nowaCena FLOAT ,
-	 cenaPoprzednia FLOAT ,
-	 cenaPromocyjna FLOAT
+	 nowaCena FLOAT
 );
 
 CREATE TABLE produkt
