@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Pracownik {
 	private String PESEL;;
-	private int id_stanowsika;
+	private int id_stanowiska;
 	private String id_konta;
 	private String imie;
 	private String nazwisko;
@@ -17,12 +17,12 @@ public class Pracownik {
 	private String nr_mieszkania;
 	private String kod_pocztowy;
 	private String poczta;
-	public Pracownik(String PESEL, int id_stanowsika, String id_konta, String imie, String nazwisko, float premia,
+	public Pracownik(String PESEL, int id_stanowiska, String id_konta, String imie, String nazwisko, float premia,
 			Date data_zatrudnienia, Date data_zwolnienia, String miasto, String ulica, String nr_budynku,
 			String nr_mieszkania, String kod_pocztowy, String poczta) {
 		super();
 		this.PESEL = PESEL;
-		this.id_stanowsika = id_stanowsika;
+		this.id_stanowiska = id_stanowiska;
 		this.id_konta = id_konta;
 		this.imie = imie;
 		this.nazwisko = nazwisko;
@@ -36,11 +36,11 @@ public class Pracownik {
 		this.kod_pocztowy = kod_pocztowy;
 		this.poczta = poczta;
 	}
-	public int getId_stanowsika() {
-		return id_stanowsika;
+	public int getId_stanowiska() {
+		return id_stanowiska;
 	}
 	public void setId_stanowsika(int id_stanowsika) {
-		this.id_stanowsika = id_stanowsika;
+		this.id_stanowiska = id_stanowsika;
 	}
 	public Date getData_zwolnienia() {
 		return data_zwolnienia;
