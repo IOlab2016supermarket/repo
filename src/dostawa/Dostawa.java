@@ -2,11 +2,16 @@ package dostawa;
 import wspolne.Zamowienie;
 import wspolne.Produkt;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 
 
 public class Dostawa {
@@ -126,4 +131,36 @@ public class Dostawa {
 			}
 		}
 	}
+	
+	public void zapiszDostawce(Dostawca dostawca, Connection connection) throws SQLException
+	{
+		String query = "";
+		query = "INSERT INTO dostawcy VALUES ("+dostawca.pobierzId()+", '" + dostawca.pobierzNazwe() + "', '" + dostawca.pobierzAdres() +"');";
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        //connection.close();
+	}
+	
+	public void wczytajDostawcow(Connection connection) throws SQLException
+	{
+		String query = "";
+		query = "SELECT * FROM dostawcy";
+		Statement statement = (Statement) connection.createStatement();
+		statement.execute(query);
+		ResultSet result = statement.getResultSet();
+		int id = 0;
+		String nazwa = null,adres = null;
+		while(result.next())
+		{
+			id=result.getInt(1);
+			nazwa=result.getString(2);
+			adres=result.getString(3);
+			dostawcy.add(new Dostawca(id,nazwa,adres));
+		}
+        statement.close();
+        //connection.close();
+	}
+	
+	
 }
