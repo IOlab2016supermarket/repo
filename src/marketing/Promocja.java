@@ -11,10 +11,10 @@ public class Promocja {
 	private int id_produkt;
 	private Date od_kiedy;
 	private Date do_kiedy;
-	private double stara_cena;
-	private double nowa_cena;
+	private float stara_cena;
+	private float nowa_cena;
 	
-	public Promocja(int id_promocji,int id_produkt, double stara_cena)
+	public Promocja(int id_promocji,int id_produkt, float stara_cena)
 	{
 		this.id_promocji = id_promocji;
 		this.id_produkt = id_produkt;
@@ -23,7 +23,7 @@ public class Promocja {
 		this.stara_cena = stara_cena;
 	}
 	
-	public Promocja(int id_promocji,int id_produkt, double stara_cena,Date od_kiedy,Date do_kiedy,double nowa_cena)
+	public Promocja(int id_promocji,int id_produkt, float stara_cena,Date od_kiedy,Date do_kiedy,float nowa_cena)
 	{
 		this.id_promocji = id_promocji;
 		this.id_produkt = id_produkt;
@@ -46,7 +46,7 @@ public class Promocja {
 	private void ustalCene()
 	{
 		String txt1 = JOptionPane.showInputDialog("Podaj nowa cene");
-		nowa_cena = Double.parseDouble(txt1);
+		nowa_cena = (float) Double.parseDouble(txt1);
 	}
 	
 	private void ustalDate()
@@ -75,12 +75,12 @@ public class Promocja {
 		return id_produkt;
 	}
 	
-	public double pobierzNowaCene()
+	public float pobierzNowaCene()
 	{
 		return nowa_cena;
 	}
 	
-	public double pobierzStaraCene()
+	public float pobierzStaraCene()
 	{
 		return stara_cena;
 	}

@@ -45,7 +45,7 @@ public class Marketing {
 	}
 	
 	//od_kiedy,do_kiedy podawane w postaci yyyy-mm-dd
-	public void utworzPromocje(Produkt produkt,String od_kiedy,String do_kiedy,double nowa_cena,List<Produkt> magazynProdukty)
+	public void utworzPromocje(Produkt produkt,String od_kiedy,String do_kiedy,float nowa_cena,List<Produkt> magazynProdukty)
 	{
     	int i;
     	if(sprawdzPromocje(produkt) == true)
@@ -311,7 +311,7 @@ public class Marketing {
 	}
 
 	//Aktualizujemy cenePromocyjna produktu
-	private void aktualizujCene(int indeks, double cena,List<Produkt> magazynProdukty)
+	private void aktualizujCene(int indeks, float cena,List<Produkt> magazynProdukty)
 	{
 		magazynProdukty.get(indeks).ustawCenePromocyjna(cena);
 		JOptionPane.showMessageDialog(null,"Cena produktu zostala zaktualizowana");
@@ -364,7 +364,7 @@ public class Marketing {
 		statement.execute(query);
 		ResultSet result = statement.getResultSet();
 		int idPromocja,idProdukt;
-		double stara_cena,nowa_cena;
+		float stara_cena,nowa_cena;
 		while(result.next())
 		{
 			idPromocja=result.getInt(1);
@@ -381,8 +381,8 @@ public class Marketing {
 				e.printStackTrace();
 			}
 			idProdukt=result.getInt(4);
-			stara_cena = result.getDouble(5);
-			nowa_cena = result.getDouble(6);
+			stara_cena = result.getFloat(5);
+			nowa_cena = result.getFloat(6);
 			promocje.add(new Promocja(idPromocja,idProdukt,stara_cena,data1,data2,nowa_cena));
 		}
         statement.close();
