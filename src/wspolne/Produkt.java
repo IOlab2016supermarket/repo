@@ -15,8 +15,8 @@ public class Produkt {
 	
 	private int id_produktu;
 	private String nazwa;
-    private int dlugoscGwarancji;
-    private double cenaZakupu; // to jest cena zakupu do sklepu
+                  private int dlugoscGwarancji;
+                  private double cenaZakupu; // to jest cena zakupu do sklepu
 	private double cenaSprzedazy; // to cena dla klienta
 	private double cenaPromocyjna;
 	private double waga;

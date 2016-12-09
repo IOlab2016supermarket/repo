@@ -26,7 +26,16 @@ public class Reklamacja {
         
     }
     
-    public String dodajNotatke(){
+     public Reklamacja ( int idReklamacja, int idKlient, int idProduktu, String notatka){
+        
+        this.idKlient = idKlient;
+        this.idProdukt =idProduktu;
+        this.idReklamacja= idReklamacja;
+        this.notatka = notatka;
+        
+    }
+    
+    public static String dodajNotatke(){
         
         String tmp = JOptionPane.showInputDialog("Dodaj notatke odnosnie reklamacji : ");
         if(tmp ==null){

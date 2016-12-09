@@ -22,12 +22,12 @@ public class Zamowienie {
 
 	private int nr_zamowienia;
 	private List<Produkt> produkty;
-                  private List<Produkt> produktySprzedaz; // robie dodatkową listę bo lepiej zeby nie mieszaly sie dostawy z tym co klient kupuje.
-	private String status;
+                  private List<Produkt> produktySprzedaz; // przechowuje produkty tymczasowo w zamowieniu ( do wyswietlenia w GUI ) / czyszczona po zatwierdzeniu zamowienia . 
+           	private String status;
 	private int czas_dostawy;
 	private Date data_zlozenia; 
 	private Date data_dostawy;
-                //  private Date data_sprzedazy; // to tez dodatkowo
+                // private Date data_sprzedazy; // to tez dodatkowo
 	private int id_sprzedawcy;
                   private int id_zamowienie;
                   private int id_klient;
@@ -65,6 +65,8 @@ public class Zamowienie {
                         Faktura faktura = new Faktura(produktySprzedaz, Sprzedaz.faktury.size() +1, k.getIdKlient() , z.id_zamowienie, zliczWartoscZamowieniaSprzedaz(), zliczIloscProduktow() );
                         //no i dalej jakieś opeeracje na bazie, zeby usunac te produkty
                         faktura.dodajFakture(faktura);
+                        
+                        produktySprzedaz.clear();
                         
                     }
                 

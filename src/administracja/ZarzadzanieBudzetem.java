@@ -20,7 +20,7 @@ public class ZarzadzanieBudzetem {
 	}
 	
 	public void wyplacWynagrodzenie(Pracownik pracownik){
-		float wartosc = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokoœæ wynagrodzenia"));
+		float wartosc = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokoÅ›Ä‡ wynagrodzenia"));
 		wyplaconeWynagrodzenia.add(new Wynagrodzenie(wartosc, new Date(),pracownik));
 	}
 }
