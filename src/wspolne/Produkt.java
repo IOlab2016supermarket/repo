@@ -15,19 +15,19 @@ public class Produkt {
 	
 	private int id_produktu;
 	private String nazwa;
-                  private int dlugoscGwarancji;
-                  private double cenaZakupu; // to jest cena zakupu do sklepu
-	private double cenaSprzedazy; // to cena dla klienta
-	private double cenaPromocyjna;
-	private double waga;
+    private int dlugoscGwarancji;
+    private float cenaZakupu; // to jest cena zakupu do sklepu
+	private float cenaSprzedazy; // to cena dla klienta
+	private float cenaPromocyjna;
+	private float waga;
 	private int ilosc;
-	//private Date dataWaznosci;
-                 //private int nr_regalu;
-                 //private int nr_polki;
-                 //private int nr_miejsca;
+	private Date dataWaznosci;
+                 private int nr_regalu;
+                 private int nr_polki;
+                 private int nr_miejsca;
                  private int punkty;
 	
-	public Produkt(int id_produktu,String nazwa,int dlugoscGwarancji,double cenaZakupu,double cenaSprzedazy,double cenaPromocyjna,double waga,int ilosc)
+	public Produkt(int id_produktu,String nazwa,int dlugoscGwarancji,float cenaZakupu,float cenaSprzedazy,float cenaPromocyjna,float waga,int ilosc,Date dataWaznosci,int nrRegalu, int nrPolki, int nrMiejsca)
 	{
 		this.id_produktu = id_produktu;
 		this.nazwa = nazwa;
@@ -37,6 +37,10 @@ public class Produkt {
 		this.cenaPromocyjna = cenaPromocyjna;
 		this.waga = waga;
 		this.ilosc = ilosc;
+                this.dataWaznosci = dataWaznosci;
+                this.nr_regalu = nrRegalu;
+                this.nr_polki = nrPolki;
+                this.nr_miejsca = nrMiejsca;
 	}
 	
 	public Produkt(Produkt produkt)
@@ -49,6 +53,7 @@ public class Produkt {
 		cenaPromocyjna = produkt.pobierzCenePromocyjna();
 		waga = produkt.pobierzWage();
 		ilosc = produkt.pobierzIlosc();
+                dataWaznosci = produkt.pobierzDateWaznosci();
 	}
 	
                     public int pobierzIloscPunktow(){
@@ -94,42 +99,42 @@ public class Produkt {
 		this.ilosc = ilosc;
 	}
 	
-	public void ustawCeneZakupu(double cenaZakupu)
+	public void ustawCeneZakupu(float cenaZakupu)
 	{
 		this.cenaZakupu = cenaZakupu;
 	}
 	
-	public double pobierzCeneZakupu()
+	public float pobierzCeneZakupu()
 	{
 		return cenaZakupu;
 	}
 	
-	public void ustawCeneSprzedazy(double cenaSprzedazy)
+	public void ustawCeneSprzedazy(float cenaSprzedazy)
 	{
 		this.cenaSprzedazy = cenaSprzedazy;
 	}
 	
-	public double pobierzCeneSprzedazy()
+	public float pobierzCeneSprzedazy()
 	{
 		return cenaSprzedazy;
 	}
 	
-	public void ustawCenePromocyjna(double cenaPromocyjna)
+	public void ustawCenePromocyjna(float cenaPromocyjna)
 	{
 		this.cenaPromocyjna = cenaPromocyjna;
 	}
 	
-	public double pobierzCenePromocyjna()
+	public float pobierzCenePromocyjna()
 	{
 		return cenaPromocyjna;
 	}
 	
-	public void ustawWage(double waga)
+	public void ustawWage(float waga)
 	{
 		this.waga = waga;
 	}
 	
-	public double pobierzWage()
+	public float pobierzWage()
 	{
 		return waga;
 	}
@@ -143,6 +148,46 @@ public class Produkt {
 	{
 		return nazwa;
 	}
+        
+        public void ustawNrRegalu(int nrRegalu)
+        {
+            this.nr_regalu = nrRegalu;
+        }
+        
+        public int pobierzNrRegalu()
+        {
+            return nr_regalu;
+        }
+        
+        public void ustawNrPolki(int nrPolki)
+        {
+            this.nr_polki = nrPolki;
+        }
+        
+        public int pobierzNrPolki()
+        {
+            return nr_polki;
+        }
+        
+        public void ustawNrMiejsca(int nrMiejsca)
+        {
+            this.nr_miejsca = nrMiejsca;
+        }
+        
+        public int pobierzNrMiejsca()
+        {
+            return nr_miejsca;
+        }
+        
+        public void ustawDateWaznosci(Date dataWaznosci)
+        {
+            this.dataWaznosci = dataWaznosci;
+        }
+        
+        public Date pobierzDateWaznosci()
+        {
+            return dataWaznosci;
+        }
 	
 	public String toString()
 	{
