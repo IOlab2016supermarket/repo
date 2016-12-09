@@ -59,7 +59,17 @@ public class Dostawa {
 		{
 			e.printStackTrace();
 		}
-		zamowienia.add(new Zamowienie(nr_zamowienia,produkty,czas_dostawy,data,id_dostawca));
+    	int i;
+    	if(zamowienia.size() == 0)
+    	{
+    		i = 1;
+    	}else
+    	{	
+    		i = zamowienia.size();
+    		while(i == zamowienia.get(zamowienia.size()-1).pobierzIdZamowienia())
+    			i++;
+    	}
+		zamowienia.add(new Zamowienie(i,nr_zamowienia,produkty,czas_dostawy,data,id_dostawca));
 	}
 	
 	

@@ -24,7 +24,7 @@ public class Zamowienie {
 	private List<Produkt> produkty;
                   private List<Produkt> produktySprzedaz; // przechowuje produkty tymczasowo w zamowieniu ( do wyswietlenia w GUI ) / czyszczona po zatwierdzeniu zamowienia . 
            	private String status;
-	private int czas_dostawy;
+	private int czas_dostawy;//liczba dni
 	private Date data_zlozenia; 
 	private Date data_dostawy;
                 // private Date data_sprzedazy; // to tez dodatkowo
@@ -35,8 +35,10 @@ public class Zamowienie {
     //private int idProdukt;
     //private int iloscProduktow;
     
-	public Zamowienie(int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,Date data_zlozenia, int id_sprzedawcy)
+     //konstruktor dla dostawy
+	public Zamowienie(int id_zamowienie,int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,Date data_zlozenia, int id_sprzedawcy)
 	{
+		this.id_zamowienie = id_zamowienie;
 		this.nr_zamowienia = nr_zamowienia;
 		this.produkty = new ArrayList<Produkt>();
 		for(int i = 0; i < produkty.size(); i++)
@@ -152,22 +154,23 @@ public class Zamowienie {
                       this.id_sprzedawcy = id;
                   }
 	
+	//dotyczy modulu dostawy
 	public List<Produkt> pobierzListeProduktow()
 	{
 		return produkty;
 	}
-	
+	//dotyczy modulu dostawy
 	public void zamowienieZrealizowane(Date data_dostawy)
 	{
 		status = new String("Zrealizowane");
 		this.data_dostawy = data_dostawy;
 	}
-	
+	//dotyczy modulu dostawy
 	public void dodajProdukt(Produkt produkt)
 	{
 		produkty.add(produkt);
 	}
-	
+	//dotyczy modulu dostawy
 	public void usunProdukt(Produkt produkt)
 	{
 		int tmp = produkty.indexOf(produkt);
