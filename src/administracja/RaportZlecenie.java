@@ -3,6 +3,11 @@ package administracja_projekt;
 import java.util.Date;
 
 public class RaportZlecenie {
+	@Override
+	public String toString() {
+		return "RaportZlecenie [poczatek=" + poczatek + ", koniec=" + koniec + "]";
+	}
+
 	protected Date poczatek;
 	protected Date koniec;
 	

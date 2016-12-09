@@ -17,11 +17,11 @@ public class Pracownik {
 	private String nr_mieszkania;
 	private String kod_pocztowy;
 	private String poczta;
-	public Pracownik(String pESEL, int id_stanowsika, String id_konta, String imie, String nazwisko, float premia,
+	public Pracownik(String PESEL, int id_stanowsika, String id_konta, String imie, String nazwisko, float premia,
 			Date data_zatrudnienia, Date data_zwolnienia, String miasto, String ulica, String nr_budynku,
 			String nr_mieszkania, String kod_pocztowy, String poczta) {
 		super();
-		PESEL = pESEL;
+		this.PESEL = PESEL;
 		this.id_stanowsika = id_stanowsika;
 		this.id_konta = id_konta;
 		this.imie = imie;
@@ -83,6 +83,30 @@ public class Pracownik {
 	}
 	public String getPoczta() {
 		return poczta;
+	}
+	public void setNazwisko(String nazwisko) {
+		this.nazwisko = nazwisko;
+	}
+	public void setPremia(float premia) {
+		this.premia = premia;
+	}
+	public void setMiasto(String miasto) {
+		this.miasto = miasto;
+	}
+	public void setUlica(String ulica) {
+		this.ulica = ulica;
+	}
+	public void setNr_budynku(String nr_budynku) {
+		this.nr_budynku = nr_budynku;
+	}
+	public void setNr_mieszkania(String nr_mieszkania) {
+		this.nr_mieszkania = nr_mieszkania;
+	}
+	public void setKod_pocztowy(String kod_pocztowy) {
+		this.kod_pocztowy = kod_pocztowy;
+	}
+	public void setPoczta(String poczta) {
+		this.poczta = poczta;
 	}
 	
 	

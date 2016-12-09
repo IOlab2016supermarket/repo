@@ -7,6 +7,10 @@ public class Wynagrodzenie {
 	private Date czasWyplacenia;
 	private Pracownik pracownik;
 	
+	public Pracownik getPracownik() {
+		return pracownik;
+	}
+
 	public Wynagrodzenie(float wartosc, Date czasWyplacenia, Pracownik pracownik) {
 		this.wartosc = wartosc;
 		this.czasWyplacenia = czasWyplacenia;
