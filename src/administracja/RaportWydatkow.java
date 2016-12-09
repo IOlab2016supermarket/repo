@@ -1,4 +1,4 @@
-package administracja_projekt;
+package administracja;
 
 public class RaportWydatkow extends RaportZlecenie {
 
