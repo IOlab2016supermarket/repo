@@ -145,7 +145,7 @@ public class Dostawa {
 	public void zapiszDostawce(Dostawca dostawca, Connection connection) throws SQLException
 	{
 		String query = "";
-		query = "INSERT INTO dostawcy VALUES ("+dostawca.pobierzId()+", '" + dostawca.pobierzNazwe() + "', '" + dostawca.pobierzAdres() +"');";
+		query = "INSERT INTO dostawca VALUES ("+dostawca.pobierzId()+", '" + dostawca.pobierzNazwe() + "', '" + dostawca.pobierzAdres() +"');";
 		Statement statement = (Statement) connection.createStatement();
         statement.executeUpdate(query);
         statement.close();
@@ -155,7 +155,7 @@ public class Dostawa {
 	public void wczytajDostawcow(Connection connection) throws SQLException
 	{
 		String query = "";
-		query = "SELECT * FROM dostawcy";
+		query = "SELECT * FROM dostawca";
 		Statement statement = (Statement) connection.createStatement();
 		statement.execute(query);
 		ResultSet result = statement.getResultSet();
