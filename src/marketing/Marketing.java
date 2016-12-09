@@ -1,11 +1,16 @@
 package marketing;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-//import java.util.Collections;
-//import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 
 import wspolne.Produkt;
 
@@ -39,7 +44,8 @@ public class Marketing {
 		ankiety.add(new Ankieta(i, id_produktu, tytul));
 	}
 	
-	public void utworzPromocje(Produkt produkt,Date od_kiedy,Date do_kiedy,double nowa_cena,List<Produkt> magazynProdukty)
+	//od_kiedy,do_kiedy podawane w postaci yyyy-mm-dd
+	public void utworzPromocje(Produkt produkt,String od_kiedy,String do_kiedy,double nowa_cena,List<Produkt> magazynProdukty)
 	{
     	int i;
     	if(sprawdzPromocje(produkt) == true)
@@ -53,7 +59,17 @@ public class Marketing {
     			while(i == promocje.get(promocje.size()-1).pobierzId())
     				i++;
     		}
-    		Promocja promocja = new Promocja(i,produkt.pobierzId(),produkt.pobierzCeneSprzedazy(),od_kiedy,do_kiedy,nowa_cena);
+    		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+    		Date data1=null,data2=null;
+			try 
+			{
+				data1 = simple.parse(od_kiedy);
+				data2 = simple.parse(do_kiedy);
+			} catch (ParseException e) 
+			{
+				e.printStackTrace();
+			}
+    		Promocja promocja = new Promocja(i,produkt.pobierzId(),produkt.pobierzCeneSprzedazy(),data1,data2,nowa_cena);
     		promocje.add(promocja);
     		sortujListe("Promocja");
     		aktualizujCene(promocja.pobierzIdProduktu(),promocja.pobierzNowaCene(),magazynProdukty);
@@ -338,5 +354,51 @@ public class Marketing {
 			}
 		}
 	}
+	
+	public void wczytajPromocje(Connection connection) throws SQLException
+	{
+		String query = "",tmp = "",tmp2 = "";
+		query = "SELECT * FROM promocja";
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		Statement statement = (Statement) connection.createStatement();
+		statement.execute(query);
+		ResultSet result = statement.getResultSet();
+		int idPromocja,idProdukt;
+		double stara_cena,nowa_cena;
+		while(result.next())
+		{
+			idPromocja=result.getInt(1);
+			Date data1=(Date) result.getObject(2);
+			Date data2=(Date) result.getObject(3);
+			tmp = data1.toString();
+			tmp2 = data2.toString();
+			try 
+			{
+				data1 = simple.parse(tmp);
+				data2 = simple.parse(tmp2);
+			} catch (ParseException e) 
+			{
+				e.printStackTrace();
+			}
+			idProdukt=result.getInt(4);
+			stara_cena = result.getDouble(5);
+			nowa_cena = result.getDouble(6);
+			promocje.add(new Promocja(idPromocja,idProdukt,stara_cena,data1,data2,nowa_cena));
+		}
+        statement.close();
+	}
+	
+	public void zapiszPromocje(Promocja promocja, Connection connection) throws SQLException
+	{
+		String query = "";
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		String data1 = simple.format(promocja.pobierzOdKiedy());
+		String data2 = simple.format(promocja.pobierzDoKiedy());	
+		query = "INSERT INTO promocja VALUES ("+promocja.pobierzId() +",'"+data1+"','"+data2+"', "+promocja.pobierzIdProduktu()+", " + promocja.pobierzStaraCene() +", "+promocja.pobierzNowaCene()+");";
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        //connection.close();
+	}	
 	
 }

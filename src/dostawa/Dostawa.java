@@ -2,13 +2,15 @@ package dostawa;
 import wspolne.Zamowienie;
 import wspolne.Produkt;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 public class Dostawa {
-
+	
 	private List<Zamowienie> zamowienia;
 	private List<Dostawca> dostawcy;
 	private Eksport eksport;
@@ -40,22 +42,28 @@ public class Dostawa {
 		return zamowienia;
 	}
 	
-	public void dodajZamowienie(Zamowienie zamowienie)
+	//data_zlozenia podawana w postaci yyyy-mm-dd
+	public void dodajZamowienie(int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,String data_zlozenia, int id_dostawca)
 	{
-		zamowienia.add(zamowienie);
-	}
-	
-	public void dodajZamowienie(int nr_zamowienia,List<Produkt> produkty,int czas_dostawy,Date data_zlozenia, int id_dostawca)
-	{
-		zamowienia.add(new Zamowienie(nr_zamowienia,produkty,czas_dostawy,data_zlozenia,id_dostawca));
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		Date data = null;
+		try 
+		{
+			data = simple.parse(data_zlozenia);
+		} catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
+		zamowienia.add(new Zamowienie(nr_zamowienia,produkty,czas_dostawy,data,id_dostawca));
 	}
 	
 	
 	/*
 	 nrZamowienia - numer zamowienia ktoremu odpowiada dostawa
 	 produktyMagazyn - lista produktow przechowywanych w magazynie
+	 dataDostawy - podawana w postaci yyyy-mm-dd
 	 */
-	public boolean sprawdzZgodnoscDostawy(int nrZamowienia,List<Produkt> produktyDostawa,Date dataDostawy,int idDostawcy, List<Produkt> produktyMagazyn)
+	public boolean sprawdzZgodnoscDostawy(int nrZamowienia,List<Produkt> produktyDostawa,String dataDostawy,int idDostawcy, List<Produkt> produktyMagazyn)
 	{
 		List<Produkt> brakReferencji = new ArrayList<Produkt>();
 		for(int i = 0; i < produktyDostawa.size(); i++)
@@ -93,7 +101,16 @@ public class Dostawa {
 		}
 		if(iloscZgodnychProduktow != brakReferencji.size() || iloscZgodnychProduktow != zamowienia.get(indeks).pobierzListeProduktow().size())
 			return false;
-		zamowienia.get(indeks).zamowienieZrealizowane(dataDostawy);
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		Date data = null;
+		try 
+		{
+			data = simple.parse(dataDostawy);
+		} catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
+		zamowienia.get(indeks).zamowienieZrealizowane(data);
 		dodajDoMagazynu(produktyMagazyn,brakReferencji);
 		return true;
 	}

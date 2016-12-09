@@ -1,18 +1,20 @@
 package marketing;
-import javax.swing.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import wspolne.Produkt;
+import javax.swing.*;
 
 public class Promocja {
 
 	private int id_promocji;
 	private int id_produkt;
-	private String od_kiedy;
-	private String do_kiedy;
+	private Date od_kiedy;
+	private Date do_kiedy;
 	private double stara_cena;
 	private double nowa_cena;
 	
-	Promocja(int id_promocji,int id_produkt, double stara_cena)
+	public Promocja(int id_promocji,int id_produkt, double stara_cena)
 	{
 		this.id_promocji = id_promocji;
 		this.id_produkt = id_produkt;
@@ -21,28 +23,46 @@ public class Promocja {
 		this.stara_cena = stara_cena;
 	}
 	
-	Promocja(int id_promocji,int id_produkt, double stara_cena,String od_kiedy,String do_kiedy,double nowa_cena)
+	public Promocja(int id_promocji,int id_produkt, double stara_cena,Date od_kiedy,Date do_kiedy,double nowa_cena)
 	{
 		this.id_promocji = id_promocji;
 		this.id_produkt = id_produkt;
-		this.od_kiedy = od_kiedy;
-		this.do_kiedy = do_kiedy;
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		String txt1 = simple.format(od_kiedy);
+		String txt2 = simple.format(do_kiedy);
+		try 
+		{
+			this.od_kiedy = simple.parse(txt1);
+			this.do_kiedy = simple.parse(txt2);
+		} 
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
 		this.stara_cena = stara_cena;
 		this.nowa_cena = nowa_cena;
 	}
 	
 	private void ustalCene()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj cenďż˝");
+		String txt1 = JOptionPane.showInputDialog("Podaj nowa cene");
 		nowa_cena = Double.parseDouble(txt1);
 	}
 	
 	private void ustalDate()
 	{
-		String txt1 = JOptionPane.showInputDialog("Podaj datďż˝ rozpoczďż˝cia (dd-mm-yyyy)");
-		od_kiedy = new String(txt1);
-		String txt2 = JOptionPane.showInputDialog("Podaj datďż˝ zakoďż˝czenia (dd-mm-yyyy)");
-		do_kiedy = new String(txt2);
+		String txt1 = JOptionPane.showInputDialog("Podaj date rozpoczecia (yyyy-mm-dd)");
+		String txt2 = JOptionPane.showInputDialog("Podaj date zakonczenia (yyyy-mm-dd)");
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		try 
+		{
+			od_kiedy = simple.parse(txt1);
+			do_kiedy = simple.parse(txt2);
+		} 
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public int pobierzId()
@@ -65,9 +85,22 @@ public class Promocja {
 		return stara_cena;
 	}
 	
+	public Date pobierzOdKiedy()
+	{
+		return od_kiedy;
+	}
+	
+	public Date pobierzDoKiedy()
+	{
+		return do_kiedy;
+	}
+	
 	public String toString()
 	{
-		return id_promocji+"  data: "+od_kiedy+"/"+do_kiedy+"       (Id produktu:"+id_produkt+")";
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		String txt1 = simple.format(od_kiedy);
+		String txt2 = simple.format(do_kiedy);
+		return id_promocji+"  data: "+txt1+"/"+txt2+"       (Id produktu:"+id_produkt+")";
 	}
 	
 }
