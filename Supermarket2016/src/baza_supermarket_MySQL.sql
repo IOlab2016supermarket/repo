@@ -16,6 +16,20 @@ CREATE TABLE dostawca
 	 adres VARCHAR(100)
 );
 
+CREATE TABLE magazynier 
+(
+     idMagazynier INTEGER PRIMARY KEY NOT NULL , 
+     imie VARCHAR(30) ,
+	 nazwisko VARCHAR(30)
+);
+
+CREATE TABLE sprzedawca 
+(
+     idSprzedawca INTEGER PRIMARY KEY NOT NULL , 
+     imie VARCHAR(30) ,
+	 nazwisko VARCHAR(30)
+);
+
 CREATE TABLE logowanie 
 (
      login VARCHAR(20) PRIMARY KEY NOT NULL , 
