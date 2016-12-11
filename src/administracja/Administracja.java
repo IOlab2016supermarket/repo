@@ -21,7 +21,7 @@ public class Administracja {
 		kadra.edytujPracownika(pracownik);
 	}
 	
-	public void zmienStanowiskoPracownika(Pracownik pracownik, int noweStanowisko){
+	public void zmienStanowiskoPracownika(Pracownik pracownik, String noweStanowisko){
 		kadra.zmienStanowiskoPracownika(pracownik, noweStanowisko);
 	}
 	

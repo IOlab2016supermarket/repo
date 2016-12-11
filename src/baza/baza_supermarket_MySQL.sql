@@ -34,40 +34,33 @@ CREATE TABLE magazyn
 	 CONSTRAINT Magazyn_Ustawienie_regalu_Pattern
 		CHECK (ustawienie_regalu LIKE 'URM[0-9][0-9][0-9][0-9]')
 );
- 
-CREATE TABLE stanowiska 
-(
-     id INTEGER PRIMARY KEY NOT NULL , 
-     nazwa VARCHAR(30) , 
-     pensja FLOAT NOT NULL, 
-     budzet_operacyjny FLOAT
-);
-
 
 CREATE TABLE pracownicy 
 (
-     PESEL CHAR(11) PRIMARY KEY NOT NULL , 
-     id_stanowiska INTEGER , 
+     id_pracownika INTEGER PRIMARY KEY NOT NULL,
      id_konta VARCHAR(20) NOT NULL, 
      imie VARCHAR(30) NOT NULL, 
      nazwisko VARCHAR(30) NOT NULL, 
+     PESEL CHAR(11) PRIMARY KEY NOT NULL,
+     stanowisko VARCHAR(50) NOT NULL, 
      premia FLOAT DEFAULT 0.0, 
-     data_zatrudnienia DATETIME NOT NULL, 
-     data_zwolnienia DATETIME , 
-     miasto VARCHAR(30) , 
-     ulica VARCHAR(40) , 
-     nr_budynku VARCHAR(5) , 
-     nr_mieszkania VARCHAR(5) , 
-     kod_pocztowy VARCHAR(6) , 
-     poczta VARCHAR(30),
+     data_zatrudnienia DATE NOT NULL, 
+     data_zwolnienia DATE, 
+     adres VARCHAR(120) ,
      CONSTRAINT Pracownicy_PESEL_Pattern
 		CHECK(PESEL LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
-	 CONSTRAINT Pracownik_Stanowisko_FK 
-		FOREIGN KEY (id_stanowiska) REFERENCES stanowiska(id) ON DELETE SET NULL,
-     CONSTRAINT Pracownik_konta_FK 
+	 CONSTRAINT Pracownik_konta_FK 
 		FOREIGN KEY (id_konta) REFERENCES konta(login)
 );
-
+CREATE TABLE wynagrodzenia
+(
+     id_wyplaty INTEGER PRIMARY KEY NOT NULL,
+     pracownik INTEGER NOT NULL,
+     kwota MONEY NOT NULL,
+     CONSTRAINT wynagrodzenia_kwota_chk CHECK (kwota > 0)
+     CONSTRAINT wynagrodzenia_pracownicy_fk
+        FOREIGN KEY (pracownik) REFERENCES pracownicy(id_pracownika)
+);
 CREATE TABLE promocje 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
