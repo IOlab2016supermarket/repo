@@ -8,7 +8,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import supermarkt.BazaDanych;
+import baza.BazaDanych;
 
 public class Logowanie {
 	
