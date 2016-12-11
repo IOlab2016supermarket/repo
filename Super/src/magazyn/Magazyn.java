@@ -90,10 +90,14 @@ public class Magazyn {
         {
             String query = "";
             query = "INSERT INTO produkt VALUES (" + produkt.pobierzId() + ", '" + produkt.pobierzNazwe() + "', " + produkt.pobierzWage() + ", " + produkt.pobierzDlugoscGwarancji()
-                                                    + ", " + produkt.pobierzDateWaznosci() + ", " + produkt.pobierzCeneZakupu() + ", " + produkt.pobierzCeneSprzedazy()+ ", " 
-                                                    + produkt.pobierzCenePromocyjna() + ", " + produkt.pobierzIlosc() + ", " + produkt.pobierzDateWaznosci()+  ", " 
-                                                    + produkt.pobierzNrRegalu() +  ", " + produkt.pobierzNrMiejsca() + ", " + produkt.pobierzNrPolki() +  ", " 
-                                                    + produkt.pobierzIloscPunktow() +  ");";
+                                                    + ", " + "'1994-02-23'" + ", " + produkt.pobierzCeneZakupu() + ", " + produkt.pobierzCeneSprzedazy()+ ", " 
+             /* z ta data to tylko przyklad*/       + produkt.pobierzCenePromocyjna() + ", " + produkt.pobierzIlosc() + ", " 
+              /*trzeba bedzie to jakos rozwiazac*/  + produkt.pobierzNrRegalu() +  ", " + produkt.pobierzNrPolki() +  ", " + produkt.pobierzNrMiejsca() + ", " + 
+                                                    + produkt.pobierzIloscPunktow() + ", " + 3 + ");";
+            // to 3 na koncu to powinno byc Id_promcji. W bazie istnieje tabel promocja, ale nigdzie w 
+            //klasach nie ma tego.. oprocz tego produkt zawiera FOREIGN KEY do promocji, a jej po prostu nie ma..
+            // dlatego sie wysypuje i to nie dziala...
+            //poza tym poprawilem kolejnosc
             statement = (Statement) connection.createStatement();
             statement.executeUpdate(query);
             statement.close();
@@ -106,7 +110,7 @@ public class Magazyn {
     }
     
     public void dodajProdukt(int id_produktu, String nazwa, int dlugoscGwarancji, float cenaZakupu, float cenaSprzedazy, float cenaPromocyjna, float waga, int ilosc, Date dataWaznosci, int nrRegalu, int nrPolki, int nrMiejsca, Connection connection)
-    {
+    { //brak w konstruktorze punkty i idpromocji
         Produkt produkt = new Produkt(id_produktu, nazwa, dlugoscGwarancji, cenaZakupu, cenaSprzedazy, cenaPromocyjna, waga, ilosc, dataWaznosci,nrRegalu, nrPolki, nrMiejsca);
         produkty.add(produkt);
         try
@@ -663,7 +667,7 @@ public class Magazyn {
     //Metody do zarządzania magazynierami
     
     public void dodajMagazyniera(Magazynier magazynier, Connection connection)
-    {
+    {//dziala Git
         magazynierzy.add(magazynier);
         try
         {
@@ -702,7 +706,7 @@ public class Magazyn {
     }
     
     public void usunMagazyniera(Magazynier magazynier, Connection connection)
-    {
+    { //dziala git 
         magazynierzy.remove(magazynier);
         try
         {
@@ -748,8 +752,8 @@ public class Magazyn {
         magazynier.ustawImie(imie);
         try
                 {
-                    String query = "";
-                    query = "UPDATE magazynier SET imie="+ imie +" WHERE idMagazynier=" + magazynier.pobierzId() + ";";
+                    String query = "";   //poprawione @marcin
+                    query = "UPDATE magazynier SET imie="+ "'" + imie+ "'" +" WHERE idMagazynier=" + magazynier.pobierzId() + ";";
                     statement = (Statement) connection.createStatement();
                     statement.executeUpdate(query);
                     statement.close();
@@ -771,7 +775,7 @@ public class Magazyn {
                 try
                 {
                     String query = "";
-                    query = "UPDATE magazynier SET imie="+ imie +" WHERE idMagazynier=" + id + ";";
+                    query = "UPDATE magazynier SET imie="+"'"+ imie + "'" +" WHERE idMagazynier=" + id + ";";
                     statement = (Statement) connection.createStatement();
                     statement.executeUpdate(query);
                     statement.close();
@@ -790,8 +794,8 @@ public class Magazyn {
         magazynier.ustawNazwisko(nazwisko);
         try
                 {
-                    String query = "";
-                    query = "UPDATE magazynier SET nazwisko="+ nazwisko +" WHERE idMagazynier=" + magazynier.pobierzId() + ";";
+                    String query = ""; //poprawione @marcin
+                    query = "UPDATE magazynier SET nazwisko="+"'" +  nazwisko+"'" +" WHERE idMagazynier=" + magazynier.pobierzId() + ";";
                     statement = (Statement) connection.createStatement();
                     statement.executeUpdate(query);
                     statement.close();
@@ -813,8 +817,8 @@ public class Magazyn {
                 magazynier.ustawNazwisko(nazwisko);
                 try
                 {
-                    String query = "";
-                    query = "UPDATE magazynier SET nazwisko="+ nazwisko +" WHERE idMagazynier=" + id + ";";
+                    String query = ""; //porpawione @marcin
+                    query = "UPDATE magazynier SET nazwisko="+ "'" + nazwisko + "'" +" WHERE idMagazynier=" + id + ";";
                     statement = (Statement) connection.createStatement();
                     statement.executeUpdate(query);
                     statement.close();

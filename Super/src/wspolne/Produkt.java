@@ -5,7 +5,7 @@
  */
 package wspolne;
 
-import java.sql.Date;
+import java.util.Date; // zamiast java.sql.Date @marcin - ujednolicamy, propozycje , uwagi ?
 
 /**
  *
@@ -28,7 +28,7 @@ public class Produkt {
                  private int punkty;
 	
 	public Produkt(int id_produktu,String nazwa,int dlugoscGwarancji,float cenaZakupu,float cenaSprzedazy,float cenaPromocyjna,float waga,int ilosc,Date dataWaznosci,int nrRegalu, int nrPolki, int nrMiejsca)
-	{
+	{ // BRAK W KONSTRUKTORZE  : punkty
 		this.id_produktu = id_produktu;
 		this.nazwa = nazwa;
 		this.dlugoscGwarancji = dlugoscGwarancji;

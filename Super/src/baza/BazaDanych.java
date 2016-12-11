@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class BazaDanych {
 
-	private static Connection polaczenie;
+	private static Connection polaczenie; //private @marcin
 
 	public static void polacz() {
 

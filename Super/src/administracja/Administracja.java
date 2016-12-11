@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Administracja {
 	private ZarzadzanieBudzetem zarzadzanieBudzetem;
-	private Kadra kadra;
+	public Kadra kadra; //tymczasowo public
 	public Administracja() {
 		kadra = new Kadra(new Vector<Pracownik>());
 		zarzadzanieBudzetem = new ZarzadzanieBudzetem(0);
@@ -21,7 +21,7 @@ public class Administracja {
 		kadra.edytujPracownika(pracownik);
 	}
 	
-	public void zmienStanowiskoPracownika(Pracownik pracownik, int noweStanowisko){
+	public void zmienStanowiskoPracownika(Pracownik pracownik, String noweStanowisko){
 		kadra.zmienStanowiskoPracownika(pracownik, noweStanowisko);
 	}
 	

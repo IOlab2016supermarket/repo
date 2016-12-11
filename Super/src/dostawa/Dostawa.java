@@ -130,7 +130,7 @@ public class Dostawa {
 		return true;
 	}
 	
-	private void dodajDoMagazynu(List<Produkt> produktyMagazyn,List<Produkt> produktyDostawa)
+	public void dodajDoMagazynu(List<Produkt> produktyMagazyn,List<Produkt> produktyDostawa) //public tymczasowo
 	{
 		for(int i = 0; i < produktyDostawa.size(); i++)
 		{
@@ -141,7 +141,7 @@ public class Dostawa {
 			}
 		}
 	}
-	
+	//Rezta metod do UPDATE, DELETE ? Aktualne sa dobre
 	public void zapiszDostawce(Dostawca dostawca, Connection connection) throws SQLException
 	{
 		String query = "";
