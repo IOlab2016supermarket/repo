@@ -1,4 +1,4 @@
-CREATE DATABASE baza_supermarket;
+--CREATE DATABASE baza_supermarket;
 --drop database baza_supermarket;
 USE baza_supermarket;
 
@@ -7,6 +7,55 @@ GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'%' IDENTIFIED BY 'Pracownik0.' WITH 
 
 CREATE USER 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.';
 GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.' WITH GRANT OPTION;
+
+
+CREATE TABLE klient 
+(
+	idKlient INTEGER PRIMARY KEY NOT NULL ,
+	iloscPunktow INTEGER ,
+	imie VARCHAR(20) ,
+	nazwisko VARCHAR(20) ,
+	kodPocztowy INTEGER
+);
+
+CREATE TABLE faktura
+(
+	idFaktura INTEGER PRIMARY KEY NOT NULL ,
+	idKlient INTEGER ,
+	produkty VARCHAR(300) ,
+	wartosc FLOAT ,
+	iloscProduktow INTEGER ,
+	idZamowienia INTEGER ,
+	CONSTRAINT klient_faktura_FK 
+		FOREIGN KEY(idKlient) REFERENCES klient(idKlient)
+);
+
+CREATE TABLE dostawca 
+(
+     idDostawca INTEGER PRIMARY KEY NOT NULL , 
+     nazwa VARCHAR(50) ,
+	 adres VARCHAR(100)
+);
+
+CREATE TABLE magazynier 
+(
+     idMagazynier INTEGER PRIMARY KEY NOT NULL , 
+     imie VARCHAR(30) ,
+	 nazwisko VARCHAR(30)
+);
+
+CREATE TABLE sprzedawca 
+(
+     idSprzedawca INTEGER PRIMARY KEY NOT NULL , 
+     imie VARCHAR(30) ,
+	 nazwisko VARCHAR(30)
+);
+
+CREATE TABLE logowanie 
+(
+     login VARCHAR(20) PRIMARY KEY NOT NULL , 
+     haslo VARCHAR(20)
+);
 
 CREATE TABLE konta 
 (
@@ -41,7 +90,7 @@ CREATE TABLE pracownicy
      id_konta VARCHAR(20) NOT NULL, 
      imie VARCHAR(30) NOT NULL, 
      nazwisko VARCHAR(30) NOT NULL, 
-     PESEL CHAR(11) PRIMARY KEY NOT NULL,
+     PESEL CHAR(11) NOT NULL,
      stanowisko VARCHAR(50) NOT NULL, 
      premia FLOAT DEFAULT 0.0, 
      data_zatrudnienia DATE NOT NULL, 
@@ -52,15 +101,17 @@ CREATE TABLE pracownicy
 	 CONSTRAINT Pracownik_konta_FK 
 		FOREIGN KEY (id_konta) REFERENCES konta(login)
 );
+
 CREATE TABLE wynagrodzenia
 (
      id_wyplaty INTEGER PRIMARY KEY NOT NULL,
      pracownik INTEGER NOT NULL,
      kwota MONEY NOT NULL,
-     CONSTRAINT wynagrodzenia_kwota_chk CHECK (kwota > 0)
+     CONSTRAINT wynagrodzenia_kwota_chk CHECK (kwota > 0),
      CONSTRAINT wynagrodzenia_pracownicy_fk
         FOREIGN KEY (pracownik) REFERENCES pracownicy(id_pracownika)
 );
+
 CREATE TABLE promocje 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
@@ -75,7 +126,7 @@ CREATE TABLE promocje
 CREATE TABLE reklamacje 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
-     id_klienta CHAR(11) NOT NULL , 
+     id_klienta INTEGER NOT NULL , 
      id_produktu INTEGER NOT NULL , 
      data_zgloszenia DATETIME , 
      opis VARCHAR(300),
@@ -86,14 +137,35 @@ CREATE TABLE reklamacje
 CREATE TABLE transakcje 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
-     id_kasjera CHAR(11) NOT NULL , 
+     id_kasjera INTEGER NOT NULL , 
      id_produktu INTEGER NOT NULL ,
      nr_paragonu INTEGER NOT NULL, 
      ilosc INTEGER , 
      data_sprzedazy DATETIME , 
      rodzaj_platnosci CHAR,
      CONSTRAINT Transakcje_Pracownik_FK 
-		FOREIGN KEY (id_kasjera) REFERENCES pracownicy(PESEL),
+		FOREIGN KEY (id_kasjera) REFERENCES pracownicy(id_pracownika),
 	 CONSTRAINT transakcje_Produkty_FK 
 		FOREIGN KEY(id_produktu) REFERENCES produkty(id) 
+);
+
+CREATE TABLE zamowienie 
+(
+     idZamowienie INTEGER PRIMARY KEY NOT NULL , 
+	 idProdukt INTEGER NOT NULL ,
+     idKlient INTEGER NOT NULL , 
+     idSprzedawca INTEGER NOT NULL ,
+	 iloscProduktow INTEGER NOT NULL ,
+	 produkty VARCHAR(300) ,
+	 status1 VARCHAR(20) ,
+	 czasDostawy DATETIME ,
+	 dostawca VARCHAR(100) ,
+	 nr_zamowienia INTEGER ,
+	 idFaktura INTEGER ,
+	 CONSTRAINT produkty_zam_FK 
+		FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
+	 CONSTRAINT faktura_zam_FK 
+		FOREIGN KEY(idFaktura) REFERENCES faktura(idFaktura) ,
+	 CONSTRAINT klient_zam_FK 
+		FOREIGN KEY(idKlient) REFERENCES klient(idKlient)
 );
