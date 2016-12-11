@@ -106,7 +106,7 @@ CREATE TABLE wynagrodzenia
 (
      id_wyplaty INTEGER PRIMARY KEY NOT NULL,
      pracownik INTEGER NOT NULL,
-     kwota MONEY NOT NULL,
+     kwota FLOAT NOT NULL,
      CONSTRAINT wynagrodzenia_kwota_chk CHECK (kwota > 0),
      CONSTRAINT wynagrodzenia_pracownicy_fk
         FOREIGN KEY (pracownik) REFERENCES pracownicy(id_pracownika)
