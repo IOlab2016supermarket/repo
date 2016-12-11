@@ -124,7 +124,7 @@ public class Sprzedaz implements IZarzadzajFakturami {
     
     public void dodajKlienta(String imie, String nazwisko, String kodPocztowy){
         
-        klienci = wczytajKlientow();
+        wczytajKlientow();
        int idKlient = klienci.size()+1;
        
         try {
@@ -154,15 +154,34 @@ public class Sprzedaz implements IZarzadzajFakturami {
         
     }
     
-    public List<Klient> wczytajKlientow(){
+    public void edytujLiczbePunktow(Klient k ,  int ilosc){
         
-        List<Klient> tmp = new ArrayList<>();
+        for(Klient klient : klienci){
+            
+            if(klient.getIdKlient() == k.getIdKlient()){
+                k.setIloscPunktow(ilosc);
+                
+                try {
+                    ResultSet wynik = BazaDanych.getPolaczenie().createStatement().executeQuery("UPDATE klient SET iloscPunktow="+ilosc+" where idKlient="+k.getIdKlient()+"  ");
+                    wynik.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }                            
+            }
+                     
+        }      
+        
+    }
+    
+    public void wczytajKlientow(){
+        
+      //  List<Klient> tmp = new ArrayList<>();
         try {
             ResultSet wynik  = BazaDanych.getPolaczenie().createStatement().executeQuery("select * from klient");
             
             while(wynik.next()){
                 
-                tmp.add(new Klient(wynik.getInt("idKlient"),
+                klienci.add(new Klient(wynik.getInt("idKlient"),
                                                wynik.getString("imie"),
                                                     wynik.getString("nazwisko"),
                                                         wynik.getString("kodPocztowy")    ));
@@ -171,7 +190,7 @@ public class Sprzedaz implements IZarzadzajFakturami {
         } catch (SQLException ex) {
               ex.printStackTrace();
         }
-        return tmp;
+       
     }
     
     public void zlozReklamacje(int idKlient, int idProduktu){

@@ -6,10 +6,12 @@
 package wspolne;
 
 
+import baza.BazaDanych;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import magazyn.Magazyn;
 import sprzedaz.Faktura;
 import sprzedaz.Klient;
 import sprzedaz.Sprzedaz;
@@ -65,7 +67,17 @@ public class Zamowienie {
                     public void zatwierdz(Klient k, Zamowienie z){
                         
                         Faktura faktura = new Faktura(produktySprzedaz, Sprzedaz.faktury.size() +1, k.getIdKlient() , z.id_zamowienie, zliczWartoscZamowieniaSprzedaz(), zliczIloscProduktow() );
-                        //no i dalej jakieś opeeracje na bazie, zeby usunac te produkty
+                        
+                        Magazyn m  = new Magazyn();
+                        
+                        for(Produkt p : produktySprzedaz){
+     
+                            m.edytujIloscProduktu(p.pobierzId(), p.pobierzIlosc()-1 , BazaDanych.getPolaczenie());
+                            
+                            if(p.pobierzIlosc() <1) 
+                                m.usunProdukt(p, BazaDanych.getPolaczenie());
+                                
+                        }
                         faktura.dodajFakture(faktura);
                         
                         produktySprzedaz.clear();
@@ -73,21 +85,31 @@ public class Zamowienie {
                     }
                 
                     public void dodajPunktyKlientowi(Klient k){
-                       
-                        int tmp =0;
+                        
+                        Sprzedaz s = new Sprzedaz();
+                        s.wczytajKlientow();
+                        int ilosc =0;
                         for(Produkt p : produktySprzedaz)
-                        tmp +=  p.pobierzIloscPunktow();
+                        ilosc +=  p.pobierzIloscPunktow();
+                        ilosc += k.getIloscPunktow();
                         
-                        k.setIloscPunktow(tmp);
-                        
+                        s.edytujLiczbePunktow(k, ilosc);
+                                                
                     }
                 
                    public void dodajProduktSprzedaz(Produkt p ){
                        
-                       if(p.pobierzIlosc() < 1){
+                       Magazyn m = new Magazyn();
+                       //List<Produkt> tmp = new ArrayList<>();
+                       Produkt tmp = new Produkt();
+                       m.wczytajProduktyZBazy(BazaDanych.getPolaczenie());
+                      // tmp = m.pobierzProdukty();
+                       tmp = m.pobierzProdukt(p.pobierzId()); //a tu nie powinien byc konstruktor kopiujacy ?
+                       
+                       if(tmp.pobierzIlosc() <1){
                            JOptionPane.showMessageDialog(null, "Brak produktu!");
                        }
-                       else produktySprzedaz.add(p);
+                       else produktySprzedaz.add(tmp);
                        
                    }
                    
