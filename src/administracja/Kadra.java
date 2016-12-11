@@ -74,10 +74,8 @@ public class Kadra {
 		ps.setString(5, pracownik.getPESEL());
 		ps.setString(6, pracownik.getStanowisko());
 		ps.setFloat(7, pracownik.getPremia());
-		java.sql.Date datazatrudnieniatmp = new java.sql.Date(pracownik.getData_zatrudnienia().getTime());
-		java.sql.Date datazwolnieniatmp = new java.sql.Date(pracownik.getData_zwolnienia().getTime());
-		ps.setDate(8,datazatrudnieniatmp);
-		ps.setDate(9,datazwolnieniatmp);
+		ps.setDate(8, new java.sql.Date(pracownik.getData_zatrudnienia().getTime()));
+		ps.setDate(9, new java.sql.Date(pracownik.getData_zwolnienia().getTime()));
 		ps.setString(10, pracownik.getAdres());
 		ps.executeQuery();
 		
@@ -99,18 +97,5 @@ public class Kadra {
 		ps.setDate(9, new java.sql.Date(pracownik.getData_zwolnienia().getTime()));
 		ps.setString(10, pracownik.getAdres());
 		ps.executeQuery();
-		Statement st = (Statement) polaczenie.createStatement();
-		String query = "INSERT INTO pracownicy VALUES (";
-		query.concat(pracownik.getId_pracownika() + ", ");
-		query.concat(pracownik.getId_konta() + ", ");
-		query.concat(pracownik.getImie() + ", ");
-		query.concat(pracownik.getNazwisko() + ", ");
-		query.concat(pracownik.getPESEL() + ", ");
-		query.concat(pracownik.getStanowisko() + ", ");
-		query.concat(pracownik.getPremia() + ", ");
-		query.concat(pracownik.getData_zatrudnienia() + ", ");
-		query.concat(pracownik.getData_zwolnienia() + ", ");
-		query.concat(pracownik.getAdres() + " );");
-		st.executeQuery(query);
 	}
 }
