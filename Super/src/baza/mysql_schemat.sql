@@ -8,8 +8,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'%' IDENTIFIED BY 'Pracownik0.' WITH 
 CREATE USER 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.';
 GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.' WITH GRANT OPTION;
 
-CREATE DATABASE baza_supermarket;
-USE baza_supermarket;
+
 CREATE TABLE klient 
 (
 	idKlient INTEGER PRIMARY KEY NOT NULL ,
@@ -98,8 +97,9 @@ CREATE TABLE pracownicy
      data_zwolnienia DATE, 
      adres VARCHAR(120) ,
      CONSTRAINT Pracownicy_PESEL_Pattern
-		CHECK(PESEL LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
-	-- CONSTRAINT Pracownik_konta_FK  FOREIGN KEY (id_konta) REFERENCES konta(login)
+		CHECK(PESEL LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+	 CONSTRAINT Pracownik_konta_FK 
+		FOREIGN KEY (id_konta) REFERENCES konta(login)
 );
 
 CREATE TABLE wynagrodzenia
@@ -112,12 +112,14 @@ CREATE TABLE wynagrodzenia
         FOREIGN KEY (pracownik) REFERENCES pracownicy(id_pracownika)
 );
 
-CREATE TABLE promocje 
+CREATE TABLE promocja 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
      data_rozpoczecia DATETIME , 
      data_zakonczenia DATETIME , 
-     id_partii INTEGER NOT NULL,
+     id_produktu INTEGER NOT NULL,
+	 stara_cena FLOAT NOT NULL,
+	 nowa_cena FLOAT NOT NULL,
      CONSTRAINT Promocje_data_rozp_wczesniejsza_niz_data_zak
 		CHECK (data_rozpoczecia < data_zakonczenia)
 );
