@@ -112,12 +112,14 @@ CREATE TABLE wynagrodzenia
         FOREIGN KEY (pracownik) REFERENCES pracownicy(id_pracownika)
 );
 
-CREATE TABLE promocje 
+CREATE TABLE promocja 
 (
      id INTEGER PRIMARY KEY NOT NULL , 
      data_rozpoczecia DATETIME , 
      data_zakonczenia DATETIME , 
-     id_partii INTEGER NOT NULL,
+     id_produktu INTEGER NOT NULL,
+	 stara_cena FLOAT NOT NULL,
+	 nowa_cena FLOAT NOT NULL,
      CONSTRAINT Promocje_data_rozp_wczesniejsza_niz_data_zak
 		CHECK (data_rozpoczecia < data_zakonczenia)
 );
