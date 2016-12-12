@@ -1,13 +1,13 @@
 package administracja;
 
-import java.util.Vector;
+import java.sql.Connection;
 
 public class Administracja {
 	private ZarzadzanieBudzetem zarzadzanieBudzetem;
 	private Kadra kadra;
-	public Administracja() {
-		kadra = new Kadra(new Vector<Pracownik>());
-		zarzadzanieBudzetem = new ZarzadzanieBudzetem(0);
+	public Administracja(Connection polaczenie) {
+		kadra = new Kadra(polaczenie);
+		zarzadzanieBudzetem = new ZarzadzanieBudzetem(0, polaczenie);
 	}
 	public void dodajPracownika(Pracownik pracownik){
 		kadra.dodajPracownika(pracownik);
