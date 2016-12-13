@@ -43,6 +43,8 @@ public class Produkt {
                 this.nr_miejsca = nrMiejsca;
 	}
 	
+        
+        
 	public Produkt(Produkt produkt)
 	{
 		id_produktu = produkt.pobierzId();

@@ -176,8 +176,8 @@ public class Magazyn {
         for(Produkt produkt : produkty)
         {
             if(produkt.pobierzId() == idProduktu)
-            {
-                retProdukt = produkt;
+            {  
+                retProdukt = new Produkt(produkt); /////////// ?????????????????????????????????????????????
             }
         }
         return retProdukt;
@@ -200,7 +200,7 @@ public class Magazyn {
         {
             if(produkt.pobierzId() == idProduktu)
             {
-                retProdukt = produkt;
+                retProdukt = new Produkt(produkt);
             }
         }
         return retProdukt;

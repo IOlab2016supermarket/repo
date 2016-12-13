@@ -103,8 +103,8 @@ public class Zamowienie {
                        //List<Produkt> tmp = new ArrayList<>();
                        Produkt tmp = new Produkt();
                        m.wczytajProduktyZBazy(BazaDanych.getPolaczenie());
-                      // tmp = m.pobierzProdukty();
-                       tmp = m.pobierzProdukt(p.pobierzId()); //a tu nie powinien byc konstruktor kopiujacy ?
+                       // tmp = m.pobierzProdukty();
+                       tmp = new Produkt(m.pobierzProdukt(p.pobierzId())); //a tu nie powinien byc konstruktor kopiujacy ?
                        
                        if(tmp.pobierzIlosc() <1){
                            JOptionPane.showMessageDialog(null, "Brak produktu!");
