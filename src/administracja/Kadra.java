@@ -30,6 +30,7 @@ public class Kadra {
 		pracownik.setImie(JOptionPane.showInputDialog("Podaj nowe imie"));
 		pracownik.setAdres(JOptionPane.showInputDialog("Podaj nowy adres"));
 		pracownik.setStanowisko(JOptionPane.showInputDialog("Podaj nowe stanowisko"));
+		modyfikujPracownikaWBazie(pracownik);
 		
 	}
 	
@@ -81,7 +82,7 @@ public class Kadra {
 				ps.setDate(9, new java.sql.Date(pracownik.getData_zwolnienia().getTime()));
 			} else ps.setDate(9, null);
 			ps.setString(10, pracownik.getAdres());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -90,7 +91,7 @@ public class Kadra {
 	private void usunPracownikaZBazy(Pracownik pracownik) {
 		try {
 			Statement st = (Statement) polaczenie.createStatement();
-			st.executeQuery("DELETE FROM pracownicy WHERE pracownicy.id_pracownika=" + pracownik.getId_pracownika());
+			st.executeUpdate("DELETE FROM pracownicy WHERE pracownicy.id_pracownika=" + pracownik.getId_pracownika());
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -112,7 +113,7 @@ public class Kadra {
 				ps.setDate(9, new java.sql.Date(pracownik.getData_zwolnienia().getTime()));
 			} else ps.setDate(9, null);
 			ps.setString(10, pracownik.getAdres());
-			ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
