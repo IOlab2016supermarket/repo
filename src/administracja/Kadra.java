@@ -43,8 +43,9 @@ public class Kadra {
 	}
 	
 	private void wczytajPracownikowZBazy(Connection polaczenie) {
+		Statement st = null;
 		try {
-			Statement st = (Statement) polaczenie.createStatement();
+			st = (Statement) polaczenie.createStatement();
 			st.executeQuery("SELECT * FROM pracownicy");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
@@ -62,11 +63,14 @@ public class Kadra {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		} finally {
+			if (st != null) st.close();
 		}
 	}
 	private void modyfikujPracownikaWBazie(Pracownik pracownik) {
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = polaczenie.prepareStatement("UPDATE pracownicy WHERE pracownicy.id_pracownika=? SET id_konta=? imie=? nazwisko=? PESEL=? stanowisko=? premia=? data_zatrudnienia=? data_zwolnienia=? adres=?");
+			ps = polaczenie.prepareStatement("UPDATE pracownicy WHERE pracownicy.id_pracownika=? SET id_konta=? imie=? nazwisko=? PESEL=? stanowisko=? premia=? data_zatrudnienia=? data_zwolnienia=? adres=?");
 			ps.setInt(1, pracownik.getId_pracownika());
 			ps.setString(2, pracownik.getId_konta());
 			ps.setString(3, pracownik.getImie());
@@ -85,6 +89,8 @@ public class Kadra {
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		} finally {
+			if (ps != null) ps.close();
 		}
 		
 	}
@@ -92,13 +98,15 @@ public class Kadra {
 		try {
 			Statement st = (Statement) polaczenie.createStatement();
 			st.executeUpdate("DELETE FROM pracownicy WHERE pracownicy.id_pracownika=" + pracownik.getId_pracownika());
+			st.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 	}
 	private void stworzPracownikaWBazie(Pracownik pracownik) {
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = polaczenie.prepareStatement("INSERT INTO pracownicy VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+			ps = polaczenie.prepareStatement("INSERT INTO pracownicy VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			ps.setInt(1, pracownik.getId_pracownika());
 			ps.setString(2, pracownik.getId_konta());
 			ps.setString(3, pracownik.getImie());
@@ -116,6 +124,8 @@ public class Kadra {
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+		} finally {
+			if (ps != null) ps.close();
 		}
 	}
 }
