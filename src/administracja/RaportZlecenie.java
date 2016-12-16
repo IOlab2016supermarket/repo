@@ -3,24 +3,16 @@ package administracja;
 import java.util.Date;
 
 public class RaportZlecenie {
-	@Override
-	public String toString() {
-		return "RaportZlecenie";
-	}
-
-	protected Date poczatek;
-	protected Date koniec;
+	private Date poczatek;
+	private Date koniec;
 	
-	public RaportZlecenie() {
-		poczatek = new Date();
+	public RaportZlecenie(Date poczatek, Date koniec) {
+		this.poczatek = poczatek;
+		this.koniec = koniec;
 	}
 
 	public Date getKoniec() {
 		return koniec;
-	}
-	
-	public void setKoniec(Date koniec) {
-		this.koniec = koniec;
 	}
 	
 	public Date getPoczatek() {

@@ -1,13 +1,10 @@
 package administracja;
 
+import java.util.Date;
 import sprzedaz.Sprzedaz;
 
 public class RaportSprzedazy extends RaportZlecenie {
 
-	@Override
-	public String toString() {
-		return "RaportSprzedazy";
-	}
 
 	@Override
 	public String getRaport() {
@@ -16,8 +13,8 @@ public class RaportSprzedazy extends RaportZlecenie {
 	
 	}
 
-	public RaportSprzedazy() {
-		super();
+	public RaportSprzedazy(Date poczatek, Date koniec) {
+		super(poczatek, koniec);
 	}
 
 }
