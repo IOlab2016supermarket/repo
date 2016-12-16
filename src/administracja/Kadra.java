@@ -43,9 +43,8 @@ public class Kadra {
 	}
 	
 	private void wczytajPracownikowZBazy(Connection polaczenie) {
-		Statement st = null;
-		try {
-			st = (Statement) polaczenie.createStatement();
+		
+		try (Statement st = (Statement) polaczenie.createStatement()) {
 			st.executeQuery("SELECT * FROM pracownicy");
 			ResultSet rs = st.getResultSet();
 			while (rs.next()) {
@@ -63,19 +62,15 @@ public class Kadra {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally {
-			if (st != null) st.close();
 		}
 	}
 	private void modyfikujPracownikaWBazie(Pracownik pracownik) {
-		PreparedStatement ps = null;
-		try {
-			ps = polaczenie.prepareStatement("UPDATE pracownicy WHERE pracownicy.id_pracownika=? SET id_konta=? imie=? nazwisko=? PESEL=? stanowisko=? premia=? data_zatrudnienia=? data_zwolnienia=? adres=?");
+		try(PreparedStatement ps = polaczenie.prepareStatement("UPDATE pracownicy WHERE pracownicy.id_pracownika=? SET id_konta=? imie=? nazwisko=? PESEL=? stanowisko=? premia=? data_zatrudnienia=? data_zwolnienia=? adres=?")) {
 			ps.setInt(1, pracownik.getId_pracownika());
 			ps.setString(2, pracownik.getId_konta());
 			ps.setString(3, pracownik.getImie());
 			ps.setString(4, pracownik.getNazwisko());
-			ps.setString(5, pracownik.getPESEL());
+			ps.setString(5, pracownik.getPesel());
 			ps.setString(6, pracownik.getStanowisko());
 			ps.setFloat(7, pracownik.getPremia());
 			ps.setDate(8, new java.sql.Date(pracownik.getData_zatrudnienia().getTime()));
@@ -89,9 +84,7 @@ public class Kadra {
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally {
-			if (ps != null) ps.close();
-		}
+		} 
 		
 	}
 	private void usunPracownikaZBazy(Pracownik pracownik) {
@@ -104,14 +97,12 @@ public class Kadra {
 		}
 	}
 	private void stworzPracownikaWBazie(Pracownik pracownik) {
-		PreparedStatement ps = null;
-		try {
-			ps = polaczenie.prepareStatement("INSERT INTO pracownicy VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+		try (PreparedStatement ps = polaczenie.prepareStatement("INSERT INTO pracownicy VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
 			ps.setInt(1, pracownik.getId_pracownika());
 			ps.setString(2, pracownik.getId_konta());
 			ps.setString(3, pracownik.getImie());
 			ps.setString(4, pracownik.getNazwisko());
-			ps.setString(5, pracownik.getPESEL());
+			ps.setString(5, pracownik.getPesel());
 			ps.setString(6, pracownik.getStanowisko());
 			ps.setFloat(7, pracownik.getPremia());
 			if (pracownik.getData_zatrudnienia() != null) {
@@ -124,8 +115,6 @@ public class Kadra {
 			ps.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally {
-			if (ps != null) ps.close();
 		}
 	}
 }

@@ -29,9 +29,8 @@ public class Administracja {
 		return kadra.wezPracownika(indeks);
 	}
 	
-	public String generujRaport(RaportZlecenie raport){
-		return zarzadzanieBudzetem.generujRaport(raport);
-		
+	public void generujRaport(RaportZlecenie raport){
+		zarzadzanieBudzetem.generujRaport(raport);
 	}
 	
 	public void wyplacWynagrodzenie(Pracownik pracownik){

@@ -4,12 +4,18 @@ public class RaportWynagrodzen extends RaportZlecenie {
 
 	@Override
 	public String toString() {
-		return "RaportWynagrodzen [poczatek=" + poczatek + ", koniec=" + koniec + "]";
+		return "RaportWynagrodzen";
 	}
 
 	public RaportWynagrodzen() {
+		
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String getRaport() {
+		
+		return super.getRaport();
 	}
 
 }

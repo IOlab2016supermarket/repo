@@ -5,7 +5,7 @@ import java.util.Date;
 public class RaportZlecenie {
 	@Override
 	public String toString() {
-		return "RaportZlecenie [poczatek=" + poczatek + ", koniec=" + koniec + "]";
+		return "RaportZlecenie";
 	}
 
 	protected Date poczatek;
@@ -25,5 +25,9 @@ public class RaportZlecenie {
 	
 	public Date getPoczatek() {
 		return poczatek;
+	}
+	public String getRaport(){
+		return "Tutaj powinno siê znajdowaæ cokolwiek o raporcie. To jest klasa bazowa, wiêc tu nic (note really, maybe, it's classified)";
+		
 	}
 }
