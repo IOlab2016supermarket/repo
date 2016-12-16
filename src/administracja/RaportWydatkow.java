@@ -1,7 +1,5 @@
 package administracja;
 
-import sprzedaz.Sprzedaz;
-
 public class RaportWydatkow extends RaportZlecenie {
 
 	@Override
