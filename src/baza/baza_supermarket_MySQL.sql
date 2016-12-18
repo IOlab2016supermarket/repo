@@ -172,3 +172,13 @@ CREATE TABLE zamowienie
 	 CONSTRAINT klient_zam_FK 
 		FOREIGN KEY(idKlient) REFERENCES klient(idKlient)
 );
+
+CREATE TABLE produktySprzedaz 
+(
+	idProduktySprzedaz INTEGER PRIMARY KEY NOT NULL ,
+	idFaktury INTEGER ,
+	CONSTRAINT produktySprzedaz_produkt_FK 
+		FOREIGN KEY(idProduktySprzedaz) REFERENCES produkty(id) ,
+	CONSTRAINT produktySprzedaz_faktura_FK 
+		FOREIGN KEY(idFaktury) REFERENCES faktura(idFaktura)
+);
