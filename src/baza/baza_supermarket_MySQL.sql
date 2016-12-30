@@ -182,3 +182,46 @@ CREATE TABLE produktySprzedaz
 	CONSTRAINT produktySprzedaz_faktura_FK 
 		FOREIGN KEY(idFaktury) REFERENCES faktura(idFaktura)
 );
+
+create table zamowienieDostawa (
+
+	id_zamowienie integer primary key not null,
+	nr_zamowienia integer ,
+	status varchar(50) ,
+	czas_dostawy integer ,
+	data_zlozenia datetime ,
+	data_dostawy datetime ,
+	id_sprzedawcy integer ,
+
+    	CONSTRAINT ZamowienieDostawa_data_zlozenia_wczesniej_niz_data_dostawy
+	 CHECK (data_zlozenia < data_dostawy)			
+);
+
+create table zamowienieDostawa_Produkt
+(
+	ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
+	idZamowienie INTEGER NOT NULL , 
+    	idProdukt INTEGER NOT NULL ,
+    	ilosc INTEGER,
+    
+	CONSTRAINT produkty_dost_FK 
+	 FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
+	CONSTRAINT zamowienie_dost_FK 
+	 FOREIGN KEY(idZamowienie) REFERENCES zamowienieDostawa(id_zamowienie) 
+);
+
+create table ankiety (
+
+	idAnkiety integer primary key not null,
+    	tytul varchar(100) 			
+);
+
+create table ankietyPytania (
+
+	ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
+	idAnkiety integer ,
+    	pytanie varchar(150) ,
+
+    	CONSTRAINT idAnkiety_FK 
+     	 FOREIGN KEY(idAnkiety) REFERENCES ankiety(idAnkiety)
+);
