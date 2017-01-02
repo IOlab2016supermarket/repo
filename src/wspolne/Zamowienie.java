@@ -140,9 +140,49 @@ public class Zamowienie {
 		return nr_zamowienia;
 	}
 	
+	public void ustawNrZamowienia(int nr_zamowienia)
+	{
+		this.nr_zamowienia = nr_zamowienia;
+	}
+	
 	public String sprawdzStatus()
 	{
 		return status;
+	}
+	
+	public int pobierzCzasDostawy()
+	{
+		return czas_dostawy;
+	}
+	
+	public void ustawCzasDostawy(int czas_dostawy)
+	{
+		this.czas_dostawy = czas_dostawy;
+	}
+	
+	public void ustawStatus(String status)
+	{
+		this.status = status;
+	}
+	
+	public void ustawDateDostawy(Date data_dostawy)
+	{
+		this.data_dostawy = data_dostawy;
+	}
+	
+	public Date pobierzDateDostawy()
+	{
+		return data_dostawy;
+	}
+	
+	public void ustawDateZłozenia(Date data_zlozenia)
+	{
+		this.data_zlozenia = data_zlozenia;
+	}
+	
+	public Date pobierzDateZłozenia()
+	{
+		return data_zlozenia;
 	}
         
                 //dotyczy  Zamowienia w sprzedazy
@@ -195,14 +235,13 @@ public class Zamowienie {
 	//dotyczy modulu dostawy
 	public void usunProdukt(Produkt produkt)
 	{
-		int tmp = produkty.indexOf(produkt);
-		produkty.remove(tmp);
+		produkty.remove(produkt);
 	}
 	
 	public String toString()
 	{
 		
-		return nr_zamowienia+","+status+","+czas_dostawy+","+data_zlozenia+","+data_dostawy+
+		return id_zamowienie+","+nr_zamowienia+","+status+","+czas_dostawy+","+data_zlozenia+","+data_dostawy+
 				","+id_sprzedawcy+","+produkty;
 	}
 
