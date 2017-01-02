@@ -27,7 +27,7 @@ public class Promocja {
 	{
 		this.id_promocji = id_promocji;
 		this.id_produkt = id_produkt;
-		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
 		String txt1 = simple.format(od_kiedy);
 		String txt2 = simple.format(do_kiedy);
 		try 
@@ -41,6 +41,11 @@ public class Promocja {
 		}
 		this.stara_cena = stara_cena;
 		this.nowa_cena = nowa_cena;
+	}
+	
+	public Promocja()
+	{
+		
 	}
 	
 	private void ustalCene()
@@ -70,9 +75,19 @@ public class Promocja {
 		return id_promocji;
 	}
 	
+	public void ustawId(int id_promocji)
+	{
+		this.id_promocji = id_promocji;
+	}
+	
 	public int pobierzIdProduktu()
 	{
 		return id_produkt;
+	}
+	
+	public void ustawIdProduktu(int id_produkt)
+	{
+		this.id_produkt = id_produkt;
 	}
 	
 	public float pobierzNowaCene()
@@ -80,9 +95,19 @@ public class Promocja {
 		return nowa_cena;
 	}
 	
+	public void ustawNowaCene(float nowa_cena)
+	{
+		this.nowa_cena = nowa_cena;
+	}
+	
 	public float pobierzStaraCene()
 	{
 		return stara_cena;
+	}
+	
+	public void ustawStaraCene(float stara_cena)
+	{
+		this.stara_cena = stara_cena;
 	}
 	
 	public Date pobierzOdKiedy()
@@ -90,17 +115,27 @@ public class Promocja {
 		return od_kiedy;
 	}
 	
+	public void ustawOdKiedy(Date od_kiedy)
+	{
+		this.od_kiedy = od_kiedy;
+	}
+	
 	public Date pobierzDoKiedy()
 	{
 		return do_kiedy;
 	}
 	
+	public void ustawDoKiedy(Date do_kiedy)
+	{
+		this.do_kiedy = do_kiedy;
+	}
+	
 	public String toString()
 	{
-		SimpleDateFormat simple = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
 		String txt1 = simple.format(od_kiedy);
 		String txt2 = simple.format(do_kiedy);
-		return id_promocji+"  data: "+txt1+"/"+txt2+"       (Id produktu:"+id_produkt+")";
+		return "Data: "+txt1+"/"+txt2;
 	}
 	
 }

@@ -1,21 +1,134 @@
 package marketing;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.thoughtworks.xstream.XStream;
 
 public class Ankieta {
 	
 	private int id_ankiety;
-	private int id_produktu;
 	private String tytul;
 	private List<String> pytania; 
 
-	public Ankieta(int id_ankiety, int id_produktu, String tytul)
+	public Ankieta(int id_ankiety, String tytul, List<String> pytania)
+	{
+		pytania = new ArrayList<String>();
+		this.pytania = pytania;
+		this.id_ankiety = id_ankiety;
+		this.tytul = tytul;
+	}
+	
+	public Ankieta(int id_ankiety, String tytul)
 	{
 		pytania = new ArrayList<String>();
 		this.id_ankiety = id_ankiety;
-		this.id_produktu = id_produktu;
 		this.tytul = tytul;
+	}
+	
+	public void generujPDF(String nazwa)
+	{
+		 BaseFont czcionka = null;
+		 Document document = new Document();
+
+		 try {
+		    
+		     try 
+		    {
+				czcionka = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.CACHED);
+			} catch (IOException e) {	
+				e.printStackTrace();
+			}
+		    PdfWriter.getInstance(document,new FileOutputStream(nazwa+".pdf"));
+		    document.open();
+
+		      Font font1 = new Font(czcionka, 27);
+		      Font font2 = new Font(czcionka, 18);
+		      Font font3 = new Font(czcionka, 13);
+		      SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+		      String txt = simple.format(new Date());
+		      
+		      Paragraph data = new Paragraph("Data: "+txt,font3);
+		      data.setAlignment(2);
+		      document.add(data);
+		      Paragraph par = new Paragraph("Ankieta",font1);
+		      par.setAlignment(1);
+		      document.add(par);
+		      Paragraph par2 = new Paragraph(this.tytul,font2);
+		      par2.setAlignment(1);
+	    	  document.add(new Paragraph(" "));
+
+	    	  document.add(par2);
+	    	  document.add(new Paragraph(" "));
+	    	  document.add(new Paragraph(" "));
+		      for(int i=0;i<this.pytania.size();i++)
+		      {
+		    	  document.add(new Paragraph((i+1)+". "+this.pytania.get(i),font3));
+		    	  document.add(new Paragraph(".............................................................." +
+		    	  		"..................................................................................."));
+		    	  document.add(new Paragraph(".............................................................." +
+			    	  	"..................................................................................."));
+		      }
+
+		      document.close();
+
+		    } catch (DocumentException e) {
+		      e.printStackTrace();
+		    } catch (FileNotFoundException e) {
+		      e.printStackTrace();
+		    }
+	}
+	
+	//nazwaPliku podawana z rozszerzeniem .html
+	//html utworzony w folderze /xml/ankieta/
+	public void generujHTML(String nazwaWyjsciowyHTML) throws TransformerException
+	{
+		XStream xstream = new XStream();
+		String xml = nazwaWyjsciowyHTML.replace(".html", "");
+		File file = new File("./xml/ankieta/"+xml+".xml");
+		String xmlPlik = xstream.toXML(this);
+		try(FileWriter fileWriter = new FileWriter(file))
+		{
+			String encoding = "<?xml version="+"\"1.0\""+" encoding="+"\"ISO-8859-2\""+"?>";
+			file.createNewFile();
+			fileWriter.write(encoding);
+			fileWriter.write(xmlPlik);
+			JOptionPane.showMessageDialog(null, "Ankieta zapisana do XML!");
+		}
+		catch(IOException ioe)
+		{
+			JOptionPane.showMessageDialog(null, "Blad zapisu danych do XML:\n" + ioe.getMessage());
+		}
+		
+		String sciezka = "./xml/ankieta/"+nazwaWyjsciowyHTML;
+	    TransformerFactory factory = TransformerFactory.newInstance();
+	    Source xslt = new StreamSource(new File("./xml/ankieta/doHTML_ankieta.xsl"));
+	    Transformer transformer = factory.newTransformer(xslt);
+	    Source text = new StreamSource(new File("./xml/ankieta/"+xml+".xml"));
+	    transformer.transform( text, new StreamResult(new File(sciezka)));
+		
 	}
 	
 	public void dodajPytanie(String txt)
@@ -38,11 +151,6 @@ public class Ankieta {
 		return id_ankiety;
 	}
 	
-	public void ustawIdProduktu(int id)
-	{
-		id_produktu = id;
-	}
-	
 	public String pobierzTytul()
 	{
 		return tytul;
@@ -53,13 +161,13 @@ public class Ankieta {
 		this.tytul = tytul;
 	}
 	
-	public int pobierzIdProduktu()
+	public List<String> pobierzPytania()
 	{
-		return id_produktu;
+		return pytania;
 	}
 	
 	public String toString()
 	{
-		return id_ankiety+"    "+id_produktu;
+		return id_ankiety+","+tytul+","+pytania.toString();
 	}
 }
