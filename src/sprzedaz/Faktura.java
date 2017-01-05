@@ -5,9 +5,13 @@
  */
 package sprzedaz;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import wspolne.Produkt;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import static sprzedaz.Sprzedaz.faktury;
 
 /**
  *
@@ -15,7 +19,7 @@ import java.util.List;
  */
 public class Faktura {
 
-    
+   @XStreamImplicit(itemFieldName="Produkt") 
    private  List<Produkt> produkty =null;
    private int idFaktura;
    private int idKlient;
@@ -38,9 +42,25 @@ public class Faktura {
     }
     
     public void generujFakture(Faktura f ){
+        Sprzedaz s  = new Sprzedaz();
+        s.wczytajFaktury();
+        boolean flaga= true;
+//        String  tmp = JOptionPane.showInputDialog("Podaj ID faktury do wygenerowania: ");
+//        while (flaga ==true){
+//            
+//            if(tmp == null) System.out.println("NIe podano nic ");
+//            else flaga = false;
+//        }
+//        int tmp2 = Integer.parseInt(tmp);
         
+        Faktura faktura = new Faktura ();
+        faktura = faktury.get(f.idFaktura);
+        XStream xs = new XStream();
+        String xml =  xs.toXML(faktura);   /// koniecznie trzeba sprawdzic czy to bedzie dzialac, wg wszelkich zrodeł internetowych powinno ale wiadomo jak to w życiu bywa...
+   
     }
    
+    //ta metoda bedzie raczej w sprzedazy.
    public void dodajFakture(Faktura f){
        Sprzedaz.faktury.add(f);
    }
