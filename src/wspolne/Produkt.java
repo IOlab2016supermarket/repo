@@ -43,7 +43,7 @@ public class Produkt {
                 this.nr_miejsca = nrMiejsca;
 	}
 	
-        
+                    
         
 	public Produkt(Produkt produkt)
 	{
@@ -57,6 +57,17 @@ public class Produkt {
 		ilosc = produkt.pobierzIlosc();
                 dataWaznosci = produkt.pobierzDateWaznosci();
 	}
+                   
+                    //potrzebne do Faktury
+                  public Produkt(int id_produktu, String nazwa, int dlugoscGwarancji, float cenaSprzedazy) {
+                     
+                        this.id_produktu = id_produktu;
+                        this.nazwa = nazwa;
+                        this.dlugoscGwarancji = dlugoscGwarancji;
+                        this.cenaSprzedazy = cenaSprzedazy;
+                      
+                  }
+                
 	
                     public int pobierzIloscPunktow(){
                         return this.punkty;

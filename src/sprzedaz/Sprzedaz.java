@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import wspolne.Produkt;
 /**
  *
  * @author Wojtass
@@ -45,25 +46,40 @@ public class Sprzedaz implements IZarzadzajFakturami {
       public float pobierzWartoscSprzedanych() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-//    public List<Faktura> wczytajFaktury(){
-//        try {
-//            ResultSet wynik = BazaDanych.getPolaczenie().createStatement().executeQuery("Select * from faktura");
-//            List<Faktura> tmpList = new ArrayList<>();
-//            while(wynik.next()){
-//     
-//                    tmpList.add(new Faktura(   tutaj powinnabyc lista produktow ?!?!!?!?
-//                                                          wynik.getInt("idFaktura"),
-//                                                          wynik.getInt("idKlient"),          
-//                                                          wynik.getInt("idZamowienia"),
-//                                                          wynik.getFloat("wartosc"),
-//                                                          wynik.getInt("iloscProduktow")   ));  
-//            }
-//            
-//            
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+      
+    public void wczytajFaktury(){
+        
+        try {
+            List<Produkt> produktyTmp = new ArrayList<>();
+            ResultSet wynikProdukty = BazaDanych.getPolaczenie().createStatement().
+                                                                                                executeQuery("Select * from produkt INNER JOIN produktysprzedaz ON produkt.idProdukt = produktysprzedaz.idProduktySpzedaz" );
+            while(wynikProdukty.next()){
+                
+                produktyTmp.add(new Produkt(
+                                                                wynikProdukty.getInt("idProdukt"),
+                                                                wynikProdukty.getString("nazwaProduktul"),
+                                                                wynikProdukty.getInt("dlugoscGwarancji"),
+                                                                wynikProdukty.getFloat("cenaSprzedazy")      ));
+                        
+            }
+            
+            ResultSet wynik = BazaDanych.getPolaczenie().createStatement().executeQuery("Select * from faktura");
+            //List<Faktura> tmpList = new ArrayList<>();
+            while(wynik.next()){
+     
+                    faktury.add(new Faktura( produktyTmp,
+                                                          wynik.getInt("idFaktura"),
+                                                          wynik.getInt("idKlient"),          
+                                                          wynik.getInt("idZamowienia"),
+                                                          wynik.getFloat("wartosc"),
+                                                          wynik.getInt("iloscProduktow")   ));  
+            }
+            
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
     
