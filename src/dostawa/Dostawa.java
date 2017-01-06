@@ -27,7 +27,17 @@ public class Dostawa {
 	
 	public void dodajDostawce( String nazwa, String adres)
 	{
-		dostawcy.add(new Dostawca(dostawcy.size()+1,nazwa,adres));
+    	int i;
+    	if(dostawcy.size() == 0)
+    	{
+    		i = 1;
+    	}else
+    	{	
+    		i = dostawcy.size();
+    		while(i <= dostawcy.get(dostawcy.size()-1).pobierzId())
+    			i++;
+    	}
+		dostawcy.add(new Dostawca(i,nazwa,adres));
 	}
 	
 	public void usunDostawce(int indeks)
