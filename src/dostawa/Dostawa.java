@@ -85,6 +85,7 @@ public class Dostawa {
 	 nrZamowienia - numer zamowienia ktoremu odpowiada dostawa
 	 produktyDostawa - lista produktow otrzymanych od dostawcy
 	 produktyMagazyn - lista produktow przechowywanych w magazynie
+	 dataDostawy - podawana w postaci yyyy-mm-dd
 	 */
 	public boolean sprawdzZgodnoscDostawy(int nrZamowienia,List<Produkt> produktyDostawa,Date dataDostawy,String nazwaDostawcy, List<Produkt> produktyMagazyn)
 	{
@@ -245,7 +246,7 @@ public class Dostawa {
         return produkty;
 	}
 	
-	private Produkt wczytajProdukty(int idProduktu,Connection connection) throws SQLException
+	/*private Produkt wczytajProdukty(int idProduktu,Connection connection) throws SQLException
 	{
 		String query = "";
 		query = "SELECT * FROM produkty where id = "+idProduktu;
@@ -265,9 +266,9 @@ public class Dostawa {
 		}
         statement.close();
         return tmp;
-	}
+	}*/
 	
-	/*private Produkt wczytajProdukty(int idProduktu,Connection connection) throws SQLException
+	private Produkt wczytajProdukty(int idProduktu,Connection connection) throws SQLException
 	{
 		String query = "";
 		query = "SELECT * FROM produkt where idProdukt = "+idProduktu;
@@ -293,7 +294,7 @@ public class Dostawa {
 		}
         statement.close();
         return tmp;
-	}*/
+	}
 	
 	public void zapiszZamowienie(Zamowienie zam, Connection connection) throws SQLException
 	{
@@ -325,6 +326,28 @@ public class Dostawa {
         statement.close();
 	}
 	
+	public void usunDostawceBazaDanych(Dostawca dostawca, Connection connection) throws SQLException
+	{
+		String query = "";
+		query = "DELETE FROM dostawca WHERE idDostawca = "+dostawca.pobierzId();
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+	}
 	
-	
+	public void usunZamowienieBazaDanych(Zamowienie zam, Connection connection) throws SQLException
+	{
+		String query = "";
+		query = "DELETE FROM zamowienieDostawa_Produkt WHERE idZamowienie = "+zam.pobierzIdZamowienia();
+
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        
+		query = "DELETE FROM zamowienieDostawa WHERE id_zamowienie = "+zam.pobierzIdZamowienia();
+
+		statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+	}
 }
