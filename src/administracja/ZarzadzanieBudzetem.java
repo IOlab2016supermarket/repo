@@ -26,7 +26,7 @@ public class ZarzadzanieBudzetem {
 	}
         
 	public ZarzadzanieBudzetem(float stanKonta, Administracja administracja) {
-		this.polaczenie = administracja.podajPolaczenie();
+		this.polaczenie = administracja.getPolaczenie();
 		this.stanKonta = stanKonta;
                 this.administracja = administracja;
 		wezWynagrodzenieZBazy();

@@ -19,7 +19,7 @@ public class RaportZlecenie {
 		return poczatek;
 	}
 	public String getRaport(){
-		return "Tutaj powinno siê znajdowaæ cokolwiek o raporcie. To jest klasa bazowa, wiêc tu nic (note really, maybe, it's classified)";
+		return "Tutaj powinno siê znajdowaæ cokolwiek o raporcie. To jest klasa bazowa, wiêc tu nic (not really, maybe, it's classified)";
 		
 	}
 }

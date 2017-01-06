@@ -7,7 +7,7 @@ public class Administracja {
 	private Kadra kadra;
     private Connection polaczenie;
         
-    public Connection podajPolaczenie() {
+    public Connection getPolaczenie() {
         return polaczenie;
     }
 

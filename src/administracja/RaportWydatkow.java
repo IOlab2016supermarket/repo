@@ -12,7 +12,7 @@ public class RaportWydatkow extends RaportZlecenie {
     
 	@Override
 	public String toString() {
-		return "Raport wydatkÃ³w";
+		return "Raport wydatków";
 	}
 
 	@Override

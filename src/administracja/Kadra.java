@@ -13,7 +13,7 @@ public class Kadra {
 	public Kadra(Administracja administracja) {
 		this.pracownicy = new ArrayList<Pracownik>();
         this.administracja = administracja;
-		this.polaczenie = administracja.podajPolaczenie();
+		this.polaczenie = administracja.getPolaczenie();
 		wczytajPracownikowZBazy(polaczenie);
 	}
 

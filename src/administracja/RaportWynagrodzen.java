@@ -9,7 +9,7 @@ public class RaportWynagrodzen extends RaportZlecenie {
 
 	@Override
 	public String toString() {
-		return "Raport Wynagrodzeń";
+		return "Raport Wynagrodze�";
 	}
 
 	public RaportWynagrodzen(List<Wynagrodzenie> wyplaconeWynagrodzenia, Date poczatek, Date koniec) {
@@ -23,7 +23,7 @@ public class RaportWynagrodzen extends RaportZlecenie {
 
 	@Override
 	public String getRaport() {
-		String tabela = "Imię\tNazwisko\tStanowisko\tWypłacona kwota\tData\n";
+		String tabela = "Imi�\tNazwisko\tStanowisko\tWyp�acona kwota\tData\n";
 		String podsumowanie = "Podsumowanie:\nCałkowita suma wypłaconych wynagrodzeń: ";;
 		float sumaWynagrodzen = 0f;
 		for (Wynagrodzenie w : wyplaconeWynagrodzenia) {
