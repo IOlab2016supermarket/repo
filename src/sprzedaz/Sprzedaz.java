@@ -39,12 +39,27 @@ public class Sprzedaz implements IZarzadzajFakturami {
     
     @Override
     public int pobierzIloscSprzedanych() {
-        return 0;
-      //  for(Faktura f : faktury)
+       
+        wczytajFaktury();
+        int tmp = 0;
+        for(Faktura f : faktury){
+            
+            tmp += f.getIloscProduktow();
+        }
+        return tmp; 
     }
+    
     @Override
       public float pobierzWartoscSprzedanych() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+          wczytajFaktury();
+          float tmp = 0;
+          for(Faktura f : faktury){
+              
+              tmp += f.getWartosc();
+          }
+          
+          return tmp ;
     }
       
     public void wczytajFaktury(){
