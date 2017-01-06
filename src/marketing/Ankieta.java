@@ -7,13 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.List;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -21,9 +21,12 @@ import javax.xml.transform.stream.StreamSource;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.thoughtworks.xstream.XStream;
 
@@ -31,19 +34,21 @@ public class Ankieta {
 	
 	private int id_ankiety;
 	private String tytul;
-	private List<String> pytania; 
+	private List<AnkietaPytanie> pytania; 
 
-	public Ankieta(int id_ankiety, String tytul, List<String> pytania)
+	public Ankieta(int id_ankiety, String tytul, List<AnkietaPytanie> pytania)
 	{
-		pytania = new ArrayList<String>();
+ 
+		pytania = new ArrayList<AnkietaPytanie>();
 		this.pytania = pytania;
 		this.id_ankiety = id_ankiety;
 		this.tytul = tytul;
 	}
 	
+	
 	public Ankieta(int id_ankiety, String tytul)
 	{
-		pytania = new ArrayList<String>();
+		pytania = new ArrayList<AnkietaPytanie>();
 		this.id_ankiety = id_ankiety;
 		this.tytul = tytul;
 	}
@@ -61,12 +66,12 @@ public class Ankieta {
 			} catch (IOException e) {	
 				e.printStackTrace();
 			}
-		    PdfWriter.getInstance(document,new FileOutputStream(nazwa+".pdf"));
+		  PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream(nazwa+".pdf"));
 		    document.open();
 
 		      Font font1 = new Font(czcionka, 27);
 		      Font font2 = new Font(czcionka, 18);
-		      Font font3 = new Font(czcionka, 13);
+		      Font font3 = new Font(czcionka, 14);
 		      SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
 		      String txt = simple.format(new Date());
 		      
@@ -85,11 +90,30 @@ public class Ankieta {
 	    	  document.add(new Paragraph(" "));
 		      for(int i=0;i<this.pytania.size();i++)
 		      {
-		    	  document.add(new Paragraph((i+1)+". "+this.pytania.get(i),font3));
-		    	  document.add(new Paragraph(".............................................................." +
-		    	  		"..................................................................................."));
-		    	  document.add(new Paragraph(".............................................................." +
-			    	  	"..................................................................................."));
+		    	  if(this.pytania.get(i).pobierzCzyOdpowiedzDoWyboru())
+		    	  {
+		    		  document.add(new Paragraph((i+1)+". "+this.pytania.get(i).pobierzTrescPytania(),font3));
+		    		  document.add(new Paragraph(" "));
+		    		  for(int j = 0; j<this.pytania.get(i).pobierzOdpowiedzi().size();j++)
+		    		  {
+		    			  Paragraph par5 = new Paragraph("         -   "+this.pytania.get(i).pobierzOdpowiedzi().get(j),font3);
+		    			  document.add(par5);
+		    			  //Rectangle rect = new Rectangle(50, 602,60, 612);
+		    			  //rect.setBorder(Rectangle.BOX);
+		    			  //rect.setBorderWidth(1);
+		    			  //document.add(rect);
+		    		  }
+	    			  document.add(new Paragraph(" "));
+		    	  }
+		    	  else
+		    	  {
+			    	  document.add(new Paragraph((i+1)+". "+this.pytania.get(i).pobierzTrescPytania(),font3));
+			    	  document.add(new Paragraph(".............................................................." +
+			    	  		"..................................................................................."));
+			    	  document.add(new Paragraph(".............................................................." +
+				    	  	"..................................................................................."));
+		    	  }
+
 		      }
 
 		      document.close();
@@ -101,8 +125,9 @@ public class Ankieta {
 		    }
 	}
 	
+	
 	//nazwaPliku podawana z rozszerzeniem .html
-	//html utworzony w folderze /xml/ankieta/
+	//html utworzony w folderze ./xml/ankieta/
 	public void generujHTML(String nazwaWyjsciowyHTML) throws TransformerException
 	{
 		XStream xstream = new XStream();
@@ -131,7 +156,8 @@ public class Ankieta {
 		
 	}
 	
-	public void dodajPytanie(String txt)
+	
+	public void dodajPytanie(AnkietaPytanie txt)
 	{
 		pytania.add(txt);
 	}
@@ -161,7 +187,7 @@ public class Ankieta {
 		this.tytul = tytul;
 	}
 	
-	public List<String> pobierzPytania()
+	public List<AnkietaPytanie> pobierzPytania()
 	{
 		return pytania;
 	}
@@ -170,4 +196,7 @@ public class Ankieta {
 	{
 		return id_ankiety+","+tytul+","+pytania.toString();
 	}
+	
+	
+	
 }
