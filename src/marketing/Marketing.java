@@ -114,9 +114,9 @@ public class Marketing {
 				tmp = JOptionPane.showConfirmDialog(null,"Mozliwosc wyboru wiecej niz jednej odpowiedzi?", " ", JOptionPane.YES_NO_OPTION);
 				if(tmp == 0)
 					czyWielokrotnegoWyboru = true;
-			    String odpowiedzi = JOptionPane.showInputDialog("Wpisz odpowiedzi oddzielone znakiem ','");
+			    String odpowiedzi = JOptionPane.showInputDialog("Wpisz odpowiedzi oddzielone srednikiem");
 			    String[] tab;
-			    tab = odpowiedzi.split(",");
+			    tab = odpowiedzi.split(";");
 			    for (int j = 0 ; j < tab.length ; j++) 
 			    {	
 			    	odpowiedziLista.add(tab[j]);
@@ -507,7 +507,7 @@ public class Marketing {
 			List<String> odpowiedzi = new ArrayList<String>();
 			String odp = result.getString(7);
 		    String[] tab;
-		    tab = odp.split(",");
+		    tab = odp.split(";");
 		    for (int j = 0 ; j < tab.length ; j++) 
 		    	odpowiedzi.add(tab[j]);
 			ankieta.dodajPytanie(new AnkietaPytanie(result.getInt(3),
@@ -536,7 +536,7 @@ public class Marketing {
 	{
 		String odpowiedzi = "";
 		for(int i = 0; i < pytanie.pobierzOdpowiedzi().size();i++)
-			odpowiedzi += pytanie.pobierzOdpowiedzi().get(i)+",";
+			odpowiedzi += pytanie.pobierzOdpowiedzi().get(i)+";";
 		System.out.println(odpowiedzi);
 		String query = "";
 		query = "INSERT INTO ankietyPytania " +
