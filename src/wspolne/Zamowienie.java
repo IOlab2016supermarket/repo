@@ -66,7 +66,6 @@ public class Zamowienie {
                 //dotyczy sprzedazy
                     public void zatwierdz(Klient k, Zamowienie z){
                         
-                        Sprzedaz s = new Sprzedaz();
                         Faktura faktura = new Faktura(produktySprzedaz, Sprzedaz.faktury.size() +1, k.getIdKlient() , z.id_zamowienie, zliczWartoscZamowieniaSprzedaz(), zliczIloscProduktow() );
                         
                         Magazyn m  = new Magazyn();
@@ -79,9 +78,7 @@ public class Zamowienie {
                                 m.usunProdukt(p, BazaDanych.getPolaczenie());
                                 
                         }
-                       
-                        s.dodajFakture(faktura);
-                        faktura.generujFakture(faktura);
+                        faktura.dodajFakture(faktura);
                         
                         produktySprzedaz.clear();
                         
@@ -178,12 +175,12 @@ public class Zamowienie {
 		return data_dostawy;
 	}
 	
-	public void ustawDateZłozenia(Date data_zlozenia)
+	public void ustawDateZlozenia(Date data_zlozenia)
 	{
 		this.data_zlozenia = data_zlozenia;
 	}
 	
-	public Date pobierzDateZłozenia()
+	public Date pobierzDateZlozenia()
 	{
 		return data_zlozenia;
 	}

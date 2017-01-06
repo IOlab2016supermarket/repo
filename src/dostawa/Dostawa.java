@@ -309,7 +309,7 @@ public class Dostawa {
 	{
 		String query = "";
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
-		String data1 = simple.format(zam.pobierzDateZłozenia()) ,data2 = null;
+		String data1 = simple.format(zam.pobierzDateZlozenia()) ,data2 = null;
 		if(zam.pobierzDateDostawy() != null)
 		{	
 			data2 = simple.format(zam.pobierzDateDostawy());	
