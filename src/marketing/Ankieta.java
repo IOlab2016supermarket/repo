@@ -38,7 +38,6 @@ public class Ankieta {
 
 	public Ankieta(int id_ankiety, String tytul, List<AnkietaPytanie> pytania)
 	{
- 
 		pytania = new ArrayList<AnkietaPytanie>();
 		this.pytania = pytania;
 		this.id_ankiety = id_ankiety;
@@ -66,7 +65,7 @@ public class Ankieta {
 			} catch (IOException e) {	
 				e.printStackTrace();
 			}
-		  PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream(nazwa+".pdf"));
+		    PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream(nazwa+".pdf"));
 		    document.open();
 
 		      Font font1 = new Font(czcionka, 27);
@@ -165,6 +164,11 @@ public class Ankieta {
 	public void usunPytanie(int numer)
 	{
 		pytania.remove(numer);
+	}
+	
+	public void usunPytanie(AnkietaPytanie txt)
+	{
+		pytania.remove(txt);
 	}
 	
 	public void ustawId(int id)

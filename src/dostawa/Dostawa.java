@@ -97,7 +97,7 @@ public class Dostawa {
 	 produktyMagazyn - lista produktow przechowywanych w magazynie
 	 dataDostawy - podawana w postaci yyyy-mm-dd
 	 */
-	public boolean sprawdzZgodnoscDostawy(int nrZamowienia,List<Produkt> produktyDostawa,Date dataDostawy,String nazwaDostawcy, List<Produkt> produktyMagazyn)
+	public boolean sprawdzZgodnoscDostawy(int nrZamowienia,List<Produkt> produktyDostawa,Date dataDostawy,String nazwaDostawcy)
 	{
 		List<Produkt> brakReferencji = new ArrayList<Produkt>();
 		for(int i = 0; i < produktyDostawa.size(); i++)
@@ -151,7 +151,6 @@ public class Dostawa {
 			e.printStackTrace();
 		}
 		zamowienia.get(indeks).zamowienieZrealizowane(dataDostawy);
-		//dodajDoMagazynu(produktyMagazyn,brakReferencji);
 		return true;
 	}
 	

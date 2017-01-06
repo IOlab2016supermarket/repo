@@ -61,7 +61,15 @@ public class AnkietaPytanie {
 		this.czyWielokrotnegoWyboru = czyWielokrotnegoWyboru;
 	}
 	
+	public void dodajOdpowiedz(String odpowiedz)
+	{
+		odpowiedziWybor.add(odpowiedz);
+	}
 	
+	public void usunOdpowiedz(String odpowiedz)
+	{
+		odpowiedziWybor.remove(odpowiedz);
+	}
 	
 	public List<String> pobierzOdpowiedzi()
 	{
