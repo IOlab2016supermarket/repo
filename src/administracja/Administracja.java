@@ -5,9 +5,16 @@ import java.sql.Connection;
 public class Administracja {
 	private ZarzadzanieBudzetem zarzadzanieBudzetem;
 	private Kadra kadra;
+    private Connection polaczenie;
+        
+    public Connection podajPolaczenie() {
+        return polaczenie;
+    }
+
 	public Administracja(Connection polaczenie) {
-		kadra = new Kadra(polaczenie);
-		zarzadzanieBudzetem = new ZarzadzanieBudzetem(0, polaczenie);
+        this.polaczenie = polaczenie;
+		this.kadra = new Kadra(this);
+		this.zarzadzanieBudzetem = new ZarzadzanieBudzetem(0, this);
 	}
 	public void dodajPracownika(Pracownik pracownik){
 		kadra.dodajPracownika(pracownik);
@@ -25,8 +32,8 @@ public class Administracja {
 		kadra.zmienStanowiskoPracownika(pracownik, noweStanowisko);
 	}
 	
-	public Pracownik wezPracownika(int indeks){
-		return kadra.wezPracownika(indeks);
+	public Pracownik wezPracownika(int nr){
+		return kadra.wezPracownika(nr);
 	}
 	
 	public void generujRaport(RaportZlecenie raport){

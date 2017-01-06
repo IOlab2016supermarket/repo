@@ -1,16 +1,19 @@
 package administracja;
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Kadra {
-	private Vector<Pracownik> pracownicy;
+	private List<Pracownik> pracownicy;
 	private Connection polaczenie;
+        private Administracja administracja;
 	
-	public Kadra(Connection polaczenie) {
-		this.pracownicy = new Vector<Pracownik>();
-		this.polaczenie = polaczenie;
+	public Kadra(Administracja administracja) {
+		this.pracownicy = new ArrayList<Pracownik>();
+        this.administracja = administracja;
+		this.polaczenie = administracja.podajPolaczenie();
 		wczytajPracownikowZBazy(polaczenie);
 	}
 
@@ -38,8 +41,11 @@ public class Kadra {
 		pracownik.setStanowisko(noweStanowisko);
 		modyfikujPracownikaWBazie(pracownik);
 	}
-	public Pracownik wezPracownika(int indeks){
-		return pracownicy.elementAt(indeks);
+	public Pracownik wezPracownika(int nr){
+            for (Pracownik next : pracownicy) {
+                if (next.getId_pracownika() == nr) return next;
+            }
+            return null;
 	}
 	
 	private void wczytajPracownikowZBazy(Connection polaczenie) {

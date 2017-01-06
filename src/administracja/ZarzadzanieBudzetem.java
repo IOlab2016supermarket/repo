@@ -11,22 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 public class ZarzadzanieBudzetem {
+	private Administracja administracja;
+    private Connection polaczenie;
 	private float stanKonta;
-	private Vector<Wynagrodzenie> wyplaconeWynagrodzenia;
-	public Vector<Wynagrodzenie> getWyplaconeWynagrodzenia() {
+    private List<Wynagrodzenie> wyplaconeWynagrodzenia;
+        
+	public List<Wynagrodzenie> getWyplaconeWynagrodzenia() {
 		return wyplaconeWynagrodzenia;
 	}
-
-	private Connection polaczenie;
-	
-	public ZarzadzanieBudzetem(float stanKonta, Connection polaczenie) {
-		this.polaczenie = polaczenie;
+        
+	public ZarzadzanieBudzetem(float stanKonta, Administracja administracja) {
+		this.polaczenie = administracja.podajPolaczenie();
 		this.stanKonta = stanKonta;
+                this.administracja = administracja;
 		wezWynagrodzenieZBazy();
 	}
 
@@ -40,20 +42,8 @@ public class ZarzadzanieBudzetem {
 				float kwota = rs.getFloat("kwota");
 				Date dataWyplacenia = rs.getDate("data_wyplacenia");
 				
-				PreparedStatement stprcnk = polaczenie.prepareStatement("SELECT * WHERE id_pracownika = (?) FROM pracownicy");
-				stprcnk.setInt(1, id_pracownika);
-				ResultSet pracownikFromId = stprcnk.executeQuery();
-				String PESEL = rs.getString("PESEL");
-				String id_konta = rs.getString("id_konta");
-				String imie = rs.getString("imie");
-				String nazwisko = rs.getString("nazwisko");
-				float premia = rs.getFloat("premia");
-				Date data_zatrudnienia = rs.getDate("data_zatrudnienia");
-				Date data_zwolnienia = rs.getDate("data_zwolnienia");
-				String adres = rs.getString("adres");
-				String stanowisko = rs.getString("stanowisko");
-				Pracownik pracownik = new Pracownik(id_pracownika, id_konta, imie, nazwisko, PESEL, stanowisko, premia, data_zatrudnienia, data_zwolnienia, adres);
-				wyplaconeWynagrodzenia.add(new Wynagrodzenie(id_wynagrodzenia,kwota,dataWyplacenia,pracownik));
+				Pracownik pracownik = administracja.wezPracownika(id_pracownika);
+                wyplaconeWynagrodzenia.add(new Wynagrodzenie(id_wynagrodzenia,kwota,dataWyplacenia,pracownik));
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -64,6 +54,10 @@ public class ZarzadzanieBudzetem {
 		try(FileOutputStream file = new FileOutputStream(new File("./raport.txt"))){
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(file));
 			writer.println(raport+" od dnia "+raport.getPoczatek()+" do "+raport.getKoniec());
+			if (raport instanceof RaportWynagrodzen) {
+				RaportWynagrodzen r = (RaportWynagrodzen)raport;
+				r.ustawWynagrodzenia(this.wyplaconeWynagrodzenia);
+			}
 			writer.println(raport.getRaport());
 			writer.println("Stan konta po operacjach: "+stanKonta);
 		}
@@ -74,7 +68,7 @@ public class ZarzadzanieBudzetem {
 	}
 	
 	public void wyplacWynagrodzenie(Pracownik pracownik){
-		float kwota = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokoœæ wynagrodzenia"));
+		float kwota = Integer.parseInt(JOptionPane.showInputDialog("Podaj wysokoÅ›Ä‡ wynagrodzenia"));
 		stanKonta-=kwota;
 		Wynagrodzenie wynagrodzenie = new Wynagrodzenie(wyplaconeWynagrodzenia.size()+1,kwota, new Date(),pracownik);
 		try (PreparedStatement ps = polaczenie.prepareStatement("INSERT INTO wynagrodzenia VALUES (?, ?, ?, ?);")) {

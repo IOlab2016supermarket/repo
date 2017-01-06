@@ -1,22 +1,30 @@
 package administracja;
 
 import java.util.Date;
-import java.util.Vector;
+import java.util.List;
 
 public class RaportWynagrodzen extends RaportZlecenie {
 
-	private Vector<Wynagrodzenie> wyplaconeWynagrodzenia;
+	private List<Wynagrodzenie> wyplaconeWynagrodzenia;
 
-	public RaportWynagrodzen(Vector<Wynagrodzenie> wyplaconeWynagrodzenia, Date poczatek, Date koniec) {
+	@Override
+	public String toString() {
+		return "Raport Wynagrodze≈Ñ";
+	}
+
+	public RaportWynagrodzen(List<Wynagrodzenie> wyplaconeWynagrodzenia, Date poczatek, Date koniec) {
 		super(poczatek, koniec);
-		this.wyplaconeWynagrodzenia = wyplaconeWynagrodzenia;
+		this.wyplaconeWynagrodzenia = null;
+	}
+
+	public void ustawWynagrodzenia(List<Wynagrodzenie> wynagrodzenia) {
+		wyplaconeWynagrodzenia = wynagrodzenia;
 	}
 
 	@Override
 	public String getRaport() {
-		String tytul = "Wyp≥acone wynagrodzenia od " + getPoczatek().toString() + "do " + getKoniec().toString();
-		String tabela = "ImiÍ\tNazwisko\tStanowisko\tWyp≥acona kwota\tData\n";
-		String podsumowanie = "Podsumowanie:\nCa≥kowita suma wyp≥aconych wynagrodzeÒ: ";
+		String tabela = "Imiƒô\tNazwisko\tStanowisko\tWyp≈Çacona kwota\tData\n";
+		String podsumowanie = "Podsumowanie:\nCa≈Çkowita suma wyp≈Çaconych wynagrodze≈Ñ: ";;
 		float sumaWynagrodzen = 0f;
 		for (Wynagrodzenie w : wyplaconeWynagrodzenia) {
 			if (w.getCzasWyplacenia().after(getPoczatek()) && w.getCzasWyplacenia().before(getKoniec())) {
@@ -26,7 +34,7 @@ public class RaportWynagrodzen extends RaportZlecenie {
 			}
 		}
 		podsumowanie = podsumowanie + Float.toString(sumaWynagrodzen);
-		return tytul + "\n" + tabela + podsumowanie;
+		return tabela + podsumowanie;
 	}
 
 }

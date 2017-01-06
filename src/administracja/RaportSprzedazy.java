@@ -5,6 +5,10 @@ import sprzedaz.Sprzedaz;
 
 public class RaportSprzedazy extends RaportZlecenie {
 
+	@Override
+	public String toString() {
+		return "Raport sprzeda¿y";
+	}
 
 	@Override
 	public String getRaport() {

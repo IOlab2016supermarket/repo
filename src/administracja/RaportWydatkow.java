@@ -1,12 +1,17 @@
-package administracja;
+	package administracja;
 import java.util.Date;
 
 public class RaportWydatkow extends RaportZlecenie {
 
 	@Override
+	public String toString() {
+		return "Raport wydatkÃ³w";
+	}
+
+	@Override
 	public String getRaport() {
-		// TODO Magazyn nie ma interfejsu. Panowie, tak siê nie robi. Wychodzimy.
-		return "Magazyn nie ma interfejsu. Panowie, tak siê nie robi. Wychodzimy";
+		// TODO Magazyn nie ma interfejsu. Panowie, tak siÄ™ nie robi. Wychodzimy.
+		return "Magazyn nie ma interfejsu. Panowie, tak siÄ™ nie robi. Wychodzimy";
 	}
 
 	public RaportWydatkow(Date poczatek, Date koniec) {
