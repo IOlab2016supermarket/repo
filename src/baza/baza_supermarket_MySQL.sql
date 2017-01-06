@@ -2,13 +2,6 @@
 --drop database baza_supermarket;
 USE baza_supermarket;
 
-CREATE USER 'pracownik'@'%' IDENTIFIED BY 'Pracownik0.';
-GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'%' IDENTIFIED BY 'Pracownik0.' WITH GRANT OPTION;
-
-CREATE USER 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.';
-GRANT ALL PRIVILEGES ON *.* TO 'pracownik'@'localhost' IDENTIFIED BY 'Pracownik0.' WITH GRANT OPTION;
-
-
 CREATE TABLE klient 
 (
 	idKlient INTEGER PRIMARY KEY NOT NULL ,
@@ -34,21 +27,21 @@ CREATE TABLE dostawca
 (
      idDostawca INTEGER PRIMARY KEY NOT NULL , 
      nazwa VARCHAR(50) ,
-	 adres VARCHAR(100)
+     adres VARCHAR(100)
 );
 
 CREATE TABLE magazynier 
 (
      idMagazynier INTEGER PRIMARY KEY NOT NULL , 
      imie VARCHAR(30) ,
-	 nazwisko VARCHAR(30)
+     nazwisko VARCHAR(30)
 );
 
 CREATE TABLE sprzedawca 
 (
      idSprzedawca INTEGER PRIMARY KEY NOT NULL , 
      imie VARCHAR(30) ,
-	 nazwisko VARCHAR(30)
+     nazwisko VARCHAR(30)
 );
 
 CREATE TABLE logowanie 
@@ -80,8 +73,8 @@ CREATE TABLE magazyn
      id_partii INTEGER NOT NULL , 
      ustawienie_regalu CHAR(7) NOT NULL,
      ilosc_produktow_w_regale INTEGER,
-	 CONSTRAINT Magazyn_Ustawienie_regalu_Pattern
-		CHECK (ustawienie_regalu LIKE 'URM[0-9][0-9][0-9][0-9]')
+     CONSTRAINT Magazyn_Ustawienie_regalu_Pattern
+	CHECK (ustawienie_regalu LIKE 'URM[0-9][0-9][0-9][0-9]')
 );
 
 CREATE TABLE pracownicy 
@@ -97,9 +90,9 @@ CREATE TABLE pracownicy
      data_zwolnienia DATE, 
      adres VARCHAR(120) ,
      CONSTRAINT Pracownicy_PESEL_Pattern
-		CHECK(PESEL LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
-	 CONSTRAINT Pracownik_konta_FK 
-		FOREIGN KEY (id_konta) REFERENCES konta(login)
+	CHECK(PESEL LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+     CONSTRAINT Pracownik_konta_FK 
+	FOREIGN KEY (id_konta) REFERENCES konta(login)
 );
 
 CREATE TABLE wynagrodzenia
@@ -119,10 +112,10 @@ CREATE TABLE promocja
      data_rozpoczecia DATETIME , 
      data_zakonczenia DATETIME , 
      id_produktu INTEGER NOT NULL,
-	 stara_cena FLOAT NOT NULL,
-	 nowa_cena FLOAT NOT NULL,
+     stara_cena FLOAT NOT NULL,
+     nowa_cena FLOAT NOT NULL,
      CONSTRAINT Promocje_data_rozp_wczesniejsza_niz_data_zak
-		CHECK (data_rozpoczecia < data_zakonczenia)
+	CHECK (data_rozpoczecia < data_zakonczenia)
 );
  
 
@@ -133,8 +126,8 @@ CREATE TABLE reklamacje
      id_produktu INTEGER NOT NULL , 
      data_zgloszenia DATETIME , 
      opis VARCHAR(300),
-	CONSTRAINT Reklamacje_Produkty_FK 
-		FOREIGN KEY (id_produktu) REFERENCES produkty(id) 
+     CONSTRAINT Reklamacje_Produkty_FK 
+	FOREIGN KEY (id_produktu) REFERENCES produkty(id) 
 );
  
 CREATE TABLE transakcje 
@@ -147,83 +140,82 @@ CREATE TABLE transakcje
      data_sprzedazy DATETIME , 
      rodzaj_platnosci CHAR,
      CONSTRAINT Transakcje_Pracownik_FK 
-		FOREIGN KEY (id_kasjera) REFERENCES pracownicy(id_pracownika),
-	 CONSTRAINT transakcje_Produkty_FK 
-		FOREIGN KEY(id_produktu) REFERENCES produkty(id) 
+	FOREIGN KEY (id_kasjera) REFERENCES pracownicy(id_pracownika),
+     CONSTRAINT transakcje_Produkty_FK 
+	FOREIGN KEY(id_produktu) REFERENCES produkty(id) 
 );
 
 CREATE TABLE zamowienie 
 (
      idZamowienie INTEGER PRIMARY KEY NOT NULL , 
-	 idProdukt INTEGER NOT NULL ,
+     idProdukt INTEGER NOT NULL ,
      idKlient INTEGER NOT NULL , 
      idSprzedawca INTEGER NOT NULL ,
-	 iloscProduktow INTEGER NOT NULL ,
-	 produkty VARCHAR(300) ,
-	 status1 VARCHAR(20) ,
-	 czasDostawy DATETIME ,
-	 dostawca VARCHAR(100) ,
-	 nr_zamowienia INTEGER ,
-	 idFaktura INTEGER ,
-	 CONSTRAINT produkty_zam_FK 
-		FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
-	 CONSTRAINT faktura_zam_FK 
-		FOREIGN KEY(idFaktura) REFERENCES faktura(idFaktura) ,
-	 CONSTRAINT klient_zam_FK 
-		FOREIGN KEY(idKlient) REFERENCES klient(idKlient)
+     iloscProduktow INTEGER NOT NULL ,
+     produkty VARCHAR(300) ,
+     status1 VARCHAR(20) ,
+     czasDostawy DATETIME ,
+     dostawca VARCHAR(100) ,
+     nr_zamowienia INTEGER ,
+     idFaktura INTEGER ,
+     CONSTRAINT produkty_zam_FK 
+	FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
+     CONSTRAINT faktura_zam_FK 
+	FOREIGN KEY(idFaktura) REFERENCES faktura(idFaktura) ,
+     CONSTRAINT klient_zam_FK 
+	FOREIGN KEY(idKlient) REFERENCES klient(idKlient)
 );
 
 CREATE TABLE produktySprzedaz 
 (
-	idProduktySprzedaz INTEGER PRIMARY KEY NOT NULL ,
-	idFaktury INTEGER ,
-	CONSTRAINT produktySprzedaz_produkt_FK 
-		FOREIGN KEY(idProduktySprzedaz) REFERENCES produkty(id) ,
-	CONSTRAINT produktySprzedaz_faktura_FK 
-		FOREIGN KEY(idFaktury) REFERENCES faktura(idFaktura)
+     idProduktySprzedaz INTEGER PRIMARY KEY NOT NULL ,
+     idFaktury INTEGER ,
+     CONSTRAINT produktySprzedaz_produkt_FK 
+	FOREIGN KEY(idProduktySprzedaz) REFERENCES produkty(id) ,
+     CONSTRAINT produktySprzedaz_faktura_FK 
+	FOREIGN KEY(idFaktury) REFERENCES faktura(idFaktura)
 );
 
 create table zamowienieDostawa (
 
-	id_zamowienie integer primary key not null,
-	nr_zamowienia integer ,
-	status varchar(50) ,
-	czas_dostawy integer ,
-	data_zlozenia datetime ,
-	data_dostawy datetime ,
-	id_sprzedawcy integer ,
-
-    	CONSTRAINT ZamowienieDostawa_data_zlozenia_wczesniej_niz_data_dostawy
-	 CHECK (data_zlozenia < data_dostawy)			
+     id_zamowienie integer primary key not null,
+     nr_zamowienia integer ,
+     status varchar(50) ,
+     czas_dostawy integer ,
+     data_zlozenia datetime ,
+     data_dostawy datetime ,
+     id_sprzedawcy integer ,
+     CONSTRAINT ZamowienieDostawa_data_zlozenia_wczesniej_niz_data_dostawy
+	CHECK (data_zlozenia < data_dostawy)			
 );
 
 create table zamowienieDostawa_Produkt
 (
-	ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
-	idZamowienie INTEGER NOT NULL , 
-    	idProdukt INTEGER NOT NULL ,
-    	ilosc INTEGER,
-    
-	CONSTRAINT produkty_dost_FK 
-	 FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
-	CONSTRAINT zamowienie_dost_FK 
-	 FOREIGN KEY(idZamowienie) REFERENCES zamowienieDostawa(id_zamowienie) 
+     ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
+     idZamowienie INTEGER NOT NULL , 
+     idProdukt INTEGER NOT NULL ,
+     ilosc INTEGER,
+     CONSTRAINT produkty_dost_FK 
+	FOREIGN KEY(idProdukt) REFERENCES produkty(id) ,
+     CONSTRAINT zamowienie_dost_FK 
+	FOREIGN KEY(idZamowienie) REFERENCES zamowienieDostawa(id_zamowienie) 
 );
 
 create table ankiety (
 
-	idAnkiety integer primary key not null,
-    	tytul varchar(100) 			
+     idAnkiety integer primary key not null,
+     tytul varchar(100) 			
 );
 
  create table ankietyPytania (
  
-	ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
-	idAnkiety integer ,
-	numerPytania integer ,
-	pytanie varchar(150) ,
-	czyOdpowiedzDoWyboru boolean ,
-	czyWielokrotnegoWyboru boolean ,
-	domyslneOdpowiedzi varchar(200) ,
-	CONSTRAINT idAnkiety_FK FOREIGN KEY(idAnkiety) REFERENCES ankiety(idAnkiety)
+     ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
+     idAnkiety integer ,
+     numerPytania integer ,
+     pytanie varchar(150) ,
+     czyOdpowiedzDoWyboru boolean ,
+     czyWielokrotnegoWyboru boolean ,
+     domyslneOdpowiedzi varchar(200) ,
+     CONSTRAINT idAnkiety_FK 
+	FOREIGN KEY(idAnkiety) REFERENCES ankiety(idAnkiety)
 );
