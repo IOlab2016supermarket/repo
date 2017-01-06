@@ -18,6 +18,7 @@ import com.mysql.jdbc.Statement;
 import wspolne.Produkt;
 
 
+
 public class Marketing {
 
 	private List<Promocja> promocje;
@@ -31,7 +32,7 @@ public class Marketing {
 		 ulotka = new Ulotka();
 	}
 	
-	public void utworzAnkiete(String tytul, List<String> pytania)
+	public void utworzAnkiete(String tytul, List<AnkietaPytanie> pytania)
 	{
     	int i;
     	if(ankiety.size() == 0)
@@ -99,16 +100,36 @@ public class Marketing {
     	txt = JOptionPane.showInputDialog("Podaj temat ankiety");
 		Ankieta ankieta = new Ankieta(i, txt);
 		boolean czyKolejnePytanie = true, czyWpisanePytanie = true;
-		while(czyKolejnePytanie == true)
+		while(czyKolejnePytanie == true && txt != null)
 		{
+			int numerPytania = 1;
+			List<String> odpowiedziLista = new ArrayList<String>();
 			txt = JOptionPane.showInputDialog("Wpisz pytanie");
+			boolean doWyboru = false, czyWielokrotnegoWyboru = false; 
+			if(txt != null)
+				tmp = JOptionPane.showConfirmDialog(null,"Czy pytanie ma miec okreslone odpowiedzi do wyboru?", " ", JOptionPane.YES_NO_OPTION);
+			if(tmp == 0 && txt != null)
+			{
+				doWyboru = true;
+				tmp = JOptionPane.showConfirmDialog(null,"Mozliwosc wyboru wiecej niz jednej odpowiedzi?", " ", JOptionPane.YES_NO_OPTION);
+				if(tmp == 0)
+					czyWielokrotnegoWyboru = true;
+			    String odpowiedzi = JOptionPane.showInputDialog("Wpisz odpowiedzi oddzielone srednikiem");
+			    String[] tab;
+			    tab = odpowiedzi.split(";");
+			    for (int j = 0 ; j < tab.length ; j++) 
+			    {	
+			    	odpowiedziLista.add(tab[j]);
+			    	System.out.println(odpowiedziLista.get(j));
+			    }
+			}
 			if(txt == null)
 			{
 				czyWpisanePytanie = false;
 				JOptionPane.showMessageDialog(null,"Ankieta nie zostala utworzona");
 			}
 			else
-				ankieta.dodajPytanie(txt);
+				ankieta.dodajPytanie(new AnkietaPytanie(numerPytania,txt,doWyboru,czyWielokrotnegoWyboru,odpowiedziLista));
 			if(czyWpisanePytanie == true)
 				tmp = JOptionPane.showConfirmDialog(null,"Czy chcesz dodac nastepne pytanie", " ", JOptionPane.YES_NO_OPTION);
 			if(tmp == 1)
@@ -119,6 +140,7 @@ public class Marketing {
 				sortujListe("Ankieta");
 				JOptionPane.showMessageDialog(null,"Ankieta zostala utworzona pomyslnie");
 			}
+			numerPytania++;
 		}
 	}
 	
@@ -155,6 +177,7 @@ public class Marketing {
 	}
 	
 	//nazwaPliku podawana z rozszerzeniem .html
+	//ulotka utworzona w folderze /xml/ulotka
 	public void utworzUlotke(List<Produkt> magazynProdukty, String nazwaPliku)
 	{		
 		boolean test = false;
@@ -481,7 +504,17 @@ public class Marketing {
 		ResultSet result = statement.getResultSet();
 		while(result.next())
 		{
-			ankieta.dodajPytanie(result.getString(3));
+			List<String> odpowiedzi = new ArrayList<String>();
+			String odp = result.getString(7);
+		    String[] tab;
+		    tab = odp.split(";");
+		    for (int j = 0 ; j < tab.length ; j++) 
+		    	odpowiedzi.add(tab[j]);
+			ankieta.dodajPytanie(new AnkietaPytanie(result.getInt(3),
+									 result.getString(4),
+									 result.getBoolean(5),
+									 result.getBoolean(6),
+									 odpowiedzi));
 		}
         statement.close();
 	}
@@ -499,14 +532,43 @@ public class Marketing {
         }
 	}
 	
-	private void zapiszPytaniaAnkiety(int idAnkiety,String pytanie,Connection connection) throws SQLException
+	private void zapiszPytaniaAnkiety(int idAnkiety,AnkietaPytanie pytanie,Connection connection) throws SQLException
 	{
+		String odpowiedzi = "";
+		for(int i = 0; i < pytanie.pobierzOdpowiedzi().size();i++)
+			odpowiedzi += pytanie.pobierzOdpowiedzi().get(i)+";";
+		System.out.println(odpowiedzi);
 		String query = "";
-		query = "INSERT INTO ankietyPytania (idAnkiety,pytanie) VALUES ("+idAnkiety+",'"+pytanie+"');";
+		query = "INSERT INTO ankietyPytania " +
+				"(idAnkiety,numerPytania,pytanie,czyOdpowiedzDoWyboru,czyWielokrotnegoWyboru,domyslneOdpowiedzi) " +
+				"VALUES ("+idAnkiety+","+pytanie.pobierzNumerPytania()+",'"+pytanie.pobierzTrescPytania()+"',"+pytanie.pobierzCzyOdpowiedzDoWyboru()+","+pytanie.pobierzCzyWielokrotnegoWyboru()+",'"+odpowiedzi+"');";
 		Statement statement = (Statement) connection.createStatement();
 		statement.executeUpdate(query);
         statement.close();
 	}
 	
+	public void usunAnkieteBazaDanych(Ankieta ankieta, Connection connection) throws SQLException
+	{	
+		String query = "";
+		query = "DELETE FROM ankietyPytania WHERE idAnkiety = "+ankieta.pobierzId();
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+        
+		query = "DELETE FROM ankiety WHERE idAnkiety = "+ankieta.pobierzId();
+		statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+	}
+	
+	public void usunPromocjeBazaDanych(Promocja promocja, Connection connection) throws SQLException
+	{	
+		String query = "";
+		query = "DELETE FROM promocja WHERE id = "+promocja.pobierzId();
+		Statement statement = (Statement) connection.createStatement();
+        statement.executeUpdate(query);
+        statement.close();
+   
+	}
 	
 }

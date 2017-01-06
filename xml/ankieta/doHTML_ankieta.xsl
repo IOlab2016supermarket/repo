@@ -21,19 +21,43 @@
 				function zapisz() 
 				{
 					var odpowiedzi = document.getElementById('tabelka');
-					var input = odpowiedzi.getElementsByTagName('input'); //pobieramy wszystkie input z tabeli
-					var test = true;
+					var input = odpowiedzi.getElementsByClassName('Lista2'); //pobieramy wszystkie input z tabeli
+					var czOdpowiedziNaPytania = odpowiedzi.getElementsByClassName('Lista2');
 					for (var x=0; x<input.length; x++) 
-					{ //pętla po wszystkich input
-						if(input[x].value == '')
-							test = false;
-						console.log(input[x].value);
-					}
+						czOdpowiedziNaPytania[x].value = true;
 					
+					for (var x=0; x<input.length; x++)
+					{
+						var lista = input[x].getElementsByTagName('input');
+						if(lista[0].type == 'text')
+						{
+							if(lista[0].value == '')
+								czOdpowiedziNaPytania[x].value = false;
+						}
+						else
+						{
+							var czyZaznaczone = false;
+							for (var l=0; l<lista.length; l++)
+							{
+								if(lista[l].checked)
+									czyZaznaczone = true;
+							}
+							if(czyZaznaczone == false)
+								czOdpowiedziNaPytania[x].value = false;
+						}
+					}					
+					
+
 					//var Ankieta = document.getElementById('idAnkiety');
 					//var idAnkiety = Ankieta.getElementsByTagName('text');
+					var czyWszystkiePytania = true;
+					for (var x=0; x<czOdpowiedziNaPytania.length; x++) 
+					{
+						if(czOdpowiedziNaPytania[x].value == false)
+							czyWszystkiePytania = false;
+					}
 					
-					if(test == true)
+					if(czyWszystkiePytania == true)
 					{
 						/*for (var x=0; x<input.length; x++) 
 						{	
@@ -86,19 +110,57 @@
         <h3>Prosimy o poświęcenie kilku minut na wypełnienie ankiety:</h3>
 			<table id="tabelka">
                 <tbody>	
-					<xsl:for-each select="marketing.Ankieta/pytania/string">
-						<tr class="Lista">
-						<td class="pytanie">
-							<xsl:value-of select="."/>
-						</td>
-						</tr>
-						<tr class="Lista">
-							<td>
-							<form action="..." class="oknoTekstowe">
-								<input type="text" name="nazwa" size="30%"/>
-							</form>
-							</td>
-						</tr>							
+					<xsl:for-each select="marketing.Ankieta/pytania/marketing.AnkietaPytanie">
+						<xsl:if test="czyOdpowiedzDoWyboru='false'">
+							<tr class="Lista">
+								<td class="pytanie">
+									<xsl:value-of select="pytanie"/>
+								</td>
+							</tr>
+							<tr class="Lista2">
+								<td>
+								<form action="..." class="oknoTekst">
+									<input type="text" name="nazwa" size="30%" class="oknoTekstowe"/>
+								</form>
+								</td>
+							</tr>
+						</xsl:if>
+						<xsl:if test="czyOdpowiedzDoWyboru='true'">
+							<xsl:if test="czyWielokrotnegoWyboru='false'">
+								<tr class="Lista">
+									<td class="pytanie">
+										<xsl:value-of select="pytanie"/>
+									</td>
+								</tr>
+								<tr class="Lista2">
+									<td>
+									<form action="..." class="rbox">
+										<xsl:for-each select="odpowiedziWybor/string">
+											<input type='radio' name='group' ng-model='mValue' class="radiobox"/><xsl:value-of select="."/>
+											<br/>
+										</xsl:for-each>
+									</form>
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="czyWielokrotnegoWyboru='true'">
+							<tr class="Lista">
+								<td class="pytanie">
+									<xsl:value-of select="pytanie"/>
+								</td>
+							</tr>
+							<tr class="Lista2">
+								<td>
+								<form action="..." class="cbox">
+									<xsl:for-each select="odpowiedziWybor/string">
+										<input type='checkbox' name='groupcheck' class="checkbox"/><xsl:value-of select="."/>
+										<br/>
+									</xsl:for-each>
+								</form>
+								</td>
+							</tr>
+							</xsl:if>
+						</xsl:if>
 					</xsl:for-each>	
 				</tbody>
 			</table>
@@ -113,5 +175,4 @@
 		</text>
 	</div>
 	</xsl:template>
-	
 </xsl:stylesheet>
