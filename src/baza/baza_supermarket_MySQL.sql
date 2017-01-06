@@ -216,12 +216,14 @@ create table ankiety (
     	tytul varchar(100) 			
 );
 
-create table ankietyPytania (
-
+ create table ankietyPytania (
+ 
 	ID INTEGER PRIMARY KEY NOT NULL auto_increment , 
 	idAnkiety integer ,
-    	pytanie varchar(150) ,
-
-    	CONSTRAINT idAnkiety_FK 
-     	 FOREIGN KEY(idAnkiety) REFERENCES ankiety(idAnkiety)
+	numerPytania integer ,
+	pytanie varchar(150) ,
+	czyOdpowiedzDoWyboru boolean ,
+	czyWielokrotnegoWyboru boolean ,
+	domyslneOdpowiedzi varchar(200) ,
+	CONSTRAINT idAnkiety_FK FOREIGN KEY(idAnkiety) REFERENCES ankiety(idAnkiety)
 );
