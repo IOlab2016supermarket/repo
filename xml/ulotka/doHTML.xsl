@@ -58,6 +58,7 @@
         </div>
 		</xsl:if>
 		
+		<xsl:if test="count(map/entry/marketing.Promocja/id__produkt[text()='0'])!=0">
 		<div class="Tabela">
 		<xsl:if test="count(map/entry/marketing.Promocja/id__produkt[text()!='0'])=0">
 			<h3>Produkty w ofercie</h3>
@@ -85,7 +86,8 @@
                     </xsl:for-each>					
                 </tbody>
 			</table>
-        </div>	
+        </div>
+		</xsl:if>
     </xsl:template>
     
 </xsl:stylesheet>

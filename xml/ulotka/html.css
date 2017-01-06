@@ -7,11 +7,6 @@
 	font-size: 14px;
 }
 
-abbr[nazwisko_adres] {
-	border-bottom:2px dashed;
-	cursor:help;
-}
-
 .nagłówek {
 	margin: 20px;
 	padding: 20px;
@@ -107,7 +102,7 @@ th {
 
 .Lista:nth-child(odd) {
 	text-align: center;
-	background-color: rgba(112, 128, 144, 0.15);
+	background-color: rgba(112, 128, 144, 0.07);
 }
 
 .centerNazwa {
