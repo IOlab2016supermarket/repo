@@ -88,10 +88,23 @@ td {
 	padding-bottom: 10px;
 }
 
-.oknoTekstowe {
+.oknoTekst {
 	text-align: center;
 	padding-bottom: 15px;
 }
+
+.cbox {
+	text-align: left;
+	padding-left: 105px;
+	padding-bottom: 10px;
+}
+
+.rbox {
+	text-align: left;
+	padding-left: 105px;
+	padding-bottom: 10px;
+}
+
 
 .przycisk {
 	text-align: center;
