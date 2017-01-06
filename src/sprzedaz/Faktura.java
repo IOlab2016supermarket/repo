@@ -61,9 +61,7 @@ public class Faktura {
     }
    
     //ta metoda bedzie raczej w sprzedazy.
-   public void dodajFakture(Faktura f){
-       Sprzedaz.faktury.add(f);
-   }
+
    
     public void setProdukty(List<Produkt> produkty) {
         this.produkty = produkty;
@@ -89,5 +87,28 @@ public class Faktura {
         this.iloscProduktow = iloscProduktow;
     }
    
+    public List<Produkt> getProdukty() {
+        return produkty;
+    }
+
+    public int getIdFaktura() {
+        return idFaktura;
+    }
+
+    public int getIdKlient() {
+        return idKlient;
+    }
+
+    public int getIdZamowienie() {
+        return idZamowienie;
+    }
+
+    public float getWartosc() {
+        return wartosc;
+    }
+
+    public int getIloscProduktow() {
+        return iloscProduktow;
+    }
     
 }

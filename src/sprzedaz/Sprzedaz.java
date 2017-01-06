@@ -49,6 +49,7 @@ public class Sprzedaz implements IZarzadzajFakturami {
       
     public void wczytajFaktury(){
         
+        faktury.clear(); // nie wiem czy tak  ale wydaję sie rozsądne czyscic za kazdym razem przed wczytaniem z bazy, natomiast 
         try {
             List<Produkt> produktyTmp = new ArrayList<>();
             ResultSet wynikProdukty = BazaDanych.getPolaczenie().createStatement().
@@ -81,7 +82,53 @@ public class Sprzedaz implements IZarzadzajFakturami {
         }
     }
 
-
+    public void dodajFakture(Faktura f){  ///ta metoda to jeden wielki znak zapytania. Nie wiem czy będą się zgadzać wszystkie ID w fakturze z produktami w osobnej tabeli.
+        
+        wczytajFaktury();
+        
+        int idFaktury = faktury.size()+1;
+        
+        try {
+            ResultSet wynik = BazaDanych.getPolaczenie().createStatement().
+            executeQuery("INSERT INTO faktura(idFaktura, idKlient, wartosc, iloscProduktow, idZamowienia) values("+idFaktury+", "+ f.getIdKlient() +" , "+f.getWartosc()+" , "+f.getIloscProduktow()+" , "+f.getIdZamowienie()+")");
+             
+            
+            for(Produkt  p :  f.getProdukty()){ //teoretycznie zadziała dla każdego produktu w fakturze którą przekazujemy.
+                
+            ResultSet wynikProdukty = BazaDanych.getPolaczenie().createStatement().
+                    executeQuery("INSERT INTO produktysprzedaz(idProduktySprzedaz, idFaktury)  values ("+p.pobierzId()+" , "+idFaktury+")") ;
+                    
+                    wynikProdukty.close();
+            }
+            
+            wynik.close();
+            
+                    } catch (SQLException ex) {
+                              ex.printStackTrace();
+        }
+        
+        
+    }
+    
+    public void usunFakture(Faktura f ){
+        
+        faktury.remove(f.getIdFaktura());
+        
+        try {
+            
+            ResultSet wynik = BazaDanych.getPolaczenie().createStatement().executeQuery(" DELETE FROM  faktura where idFaktura = "+f.getIdFaktura()+" ");
+            ResultSet wynikProdukty = BazaDanych.getPolaczenie().createStatement().executeQuery("DELETE FROM produktysprzedaz where idFaktury = "+f.getIdFaktura()+" ");
+            
+            wynik.close();
+            wynikProdukty.close();
+            
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+    }
     
     public void dodajZamowienie(int idKlient , int idSprzedawca ){
         
@@ -292,14 +339,6 @@ public class Sprzedaz implements IZarzadzajFakturami {
     public List<Reklamacja> getReklamacje() {
         return reklamacje;
     }        
-    //maina ttu nie bedzie
-    public static void main(String[] args) throws SQLException {
-       BazaDanych.polacz();
-       //BazaDanych.getPolaczenie().ping();
-       
-      
-       
-    }
 
     
 }
