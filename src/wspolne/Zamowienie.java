@@ -67,7 +67,7 @@ public class Zamowienie {
                     public void zatwierdz(Klient k, Zamowienie z){
                         
                         Faktura faktura = new Faktura(produktySprzedaz, Sprzedaz.faktury.size() +1, k.getIdKlient() , z.id_zamowienie, zliczWartoscZamowieniaSprzedaz(), zliczIloscProduktow() );
-                        
+                        Sprzedaz s = new Sprzedaz();
                         Magazyn m  = new Magazyn();
                         
                         for(Produkt p : produktySprzedaz){
@@ -78,8 +78,9 @@ public class Zamowienie {
                                 m.usunProdukt(p, BazaDanych.getPolaczenie());
                                 
                         }
-                        faktura.dodajFakture(faktura);
-                        
+                       
+                        s.dodajFakture(faktura);
+                        faktura.generujFakture(faktura);
                         produktySprzedaz.clear();
                         
                     }
