@@ -1,0 +1,24 @@
+﻿txtPremia.setInputVerifier(new InputVerifier() {
+
+            @Override
+            public boolean verify(JComponent input) {
+                JTextField textField = ((JTextField) input);
+                try {
+                    Float isFloat = Float.valueOf(textField.getText());
+                    textField.setBackground(Color.WHITE);
+                    return true;
+                } catch (NumberFormatException e) {
+                    textField.setBackground(Color.RED);
+                    return false;
+                }
+
+            }
+        });
+
+
+For a time picker you can use a JSpinner and set a JSpinner.DateEditor that only shows the time value.
+
+JSpinner timeSpinner = new JSpinner( new SpinnerDateModel() );
+JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm:ss");
+timeSpinner.setEditor(timeEditor);
+timeSpinner.setValue(new Date()); // will only show the current time
