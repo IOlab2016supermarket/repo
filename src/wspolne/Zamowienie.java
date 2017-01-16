@@ -75,7 +75,7 @@ public class Zamowienie {
                             m.edytujIloscProduktu(p.pobierzId(), p.pobierzIlosc()-1 , BazaDanych.getPolaczenie());
                             
                             if(p.pobierzIlosc() <1) 
-                                m.usunProdukt(p, BazaDanych.getPolaczenie());
+                                m.usunProdukt(p, BazaDanych.getPolaczenie()); // opcjonalnie, architekcie, zastanow sie :D
                                 
                         }
                        
@@ -194,7 +194,13 @@ public class Zamowienie {
                   public float zliczWartoscZamowieniaSprzedaz(){
                       
                       float wartosc= 0;
-                      for(Produkt p : produktySprzedaz)  wartosc +=p.pobierzCeneSprzedazy();
+                      for(Produkt p : produktySprzedaz) {
+                          
+                          if(p.pobierzCenePromocyjna() >0)
+                              wartosc +=p.pobierzCenePromocyjna();
+                          else
+                              wartosc +=p.pobierzCeneSprzedazy();
+                      }
                       return wartosc;
                   }
 	
